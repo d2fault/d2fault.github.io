@@ -3,29 +3,50 @@
 
 
     <url>
+        <loc>https://d2fault.github.io/tags/enumset/</loc>
+        <lastmod>2021-07-05T16:29:22.988Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/tags/bitmask/</loc>
+        <lastmod>2021-07-05T16:29:22.988Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/tags/android/</loc>
+        <lastmod>2021-07-05T16:29:22.988Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://d2fault.github.io/tags/dispatchers/</loc>
-        <lastmod>2021-07-05T14:03:25.373Z</lastmod>
+        <lastmod>2021-07-05T16:26:47.540Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://d2fault.github.io/tags/context/</loc>
-        <lastmod>2021-07-05T14:03:25.373Z</lastmod>
+        <lastmod>2021-07-05T16:26:47.540Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://d2fault.github.io/tags/coroutine/</loc>
-        <lastmod>2021-07-05T14:03:25.373Z</lastmod>
+        <lastmod>2021-07-05T16:26:47.540Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://d2fault.github.io/tags/kotlin/</loc>
-        <lastmod>2021-07-05T14:03:25.373Z</lastmod>
+        <lastmod>2021-07-05T16:26:47.540Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

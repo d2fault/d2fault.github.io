@@ -18,7 +18,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://d2fault.github.io/images/thumbnail/thumb_kotlin_android.png">
 <meta property="article:published_time" content="2021-02-20T16:46:05.000Z">
-<meta property="article:modified_time" content="2021-07-05T14:03:25.373Z">
+<meta property="article:modified_time" content="2021-07-05T16:26:47.540Z">
 <meta property="article:author" content="Jiyoung(d2fault)">
 <meta property="article:tag" content="kotlin">
 <meta property="article:tag" content="coroutine">
@@ -202,7 +202,7 @@ ga('send', 'pageview');
 <div class="article-date">
   <i class="fa fa-calendar-plus-o"></i>
   <a href="/2021/02/21/20210221-coroutine-context-and-dispatchers/" class="article-date">
-     <time datetime="2021-07-05T14:03:25.373Z" itemprop="dateModified">2021-07-05</time>
+     <time datetime="2021-07-05T16:26:47.540Z" itemprop="dateModified">2021-07-06</time>
   </a>
 </div>
 
@@ -254,7 +254,7 @@ ga('send', 'pageview');
 <p>반면, 코루틴 컨텍스트 요소들은 보통 부모 코루틴 스코프의 컨텍스트 요소가 자식 컨텍스트 요소에게 상속된다. 특히 <code>runBlocking</code> 코루틴의 기본 디스패처는 호출한 스레드에 국한되기 때문에 이를 상속하는 것은 그 스레드에만 국한되도록 하는 효과가 있다. 예측 가능한 FIFO 스케줄링이 필요할 때 confined dispatcher를 사용하면 된다.</p>
 <figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> = runBlocking&lt;<span class="built_in">Unit</span>&gt; &#123;</span><br><span class="line">    launch(Dispatchers.Unconfined) &#123; <span class="comment">// not confined -- will work with main thread</span></span><br><span class="line">        println(<span class="string">&quot;Unconfined      : I&#x27;m working in thread <span class="subst">$&#123;Thread.currentThread().name&#125;</span>&quot;</span>)</span><br><span class="line">        delay(<span class="number">500</span>)</span><br><span class="line">        println(<span class="string">&quot;Unconfined      : After delay in thread <span class="subst">$&#123;Thread.currentThread().name&#125;</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    launch &#123; <span class="comment">// context of the parent, main runBlocking coroutine</span></span><br><span class="line">        println(<span class="string">&quot;main runBlocking: I&#x27;m working in thread <span class="subst">$&#123;Thread.currentThread().name&#125;</span>&quot;</span>)</span><br><span class="line">        delay(<span class="number">1000</span>)</span><br><span class="line">        println(<span class="string">&quot;main runBlocking: After delay in thread <span class="subst">$&#123;Thread.currentThread().name&#125;</span>&quot;</span>)</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>위의 코드를 실행해 보면 다음의 결과를 볼 수 있다.</p>
-<p><img src="/images/1.jpg" alt="" /></p>
+<p><img src="/images/20210221-coroutine_context_and_dispatchers/1.jpg" alt="" /></p>
 <p><code>launch</code> 에 별다른 디스패처 세팅을 하지 않은 코루틴은 <code>runBlocking</code> 을 따라 호출한 스레드에 국한되어 실행된다. 반면 <mark><strong><code>Dispatchers.Unconfined</code> 세팅을 한 코루틴은 <code>delay</code> 전과 후에 코루틴이 실행되는 스레드가 다르다.</strong></mark></p>
 <br>
 <h2 id="debugging-coroutines-and-threads"><a class="markdownIt-Anchor" href="#debugging-coroutines-and-threads"></a> Debugging coroutines and threads</h2>
@@ -264,7 +264,7 @@ ga('send', 'pageview');
 <p>단, 디버깅 기능은 <code>kotlinx-coroutines-core</code> 버전 1.3.8 이상에서만 지원한다.</p>
 </blockquote>
 <p>JVM 옵션에 <code>-Dkotlinx.coroutines.debug</code> 을 추가하면 Thread 명에 추가로 코루틴 이름까지 출력되는 것을 확인할 수 있다.</p>
-<p><img src="/images/2.jpg" alt="" /></p>
+<p><img src="/images/20210221-coroutine_context_and_dispatchers/2.jpg" alt="" /></p>
 <p>코루틴 디버거를 사용하여 디버그 모드로 애플리케이션을 실행하면 다음과 같은 기능을 사용할 수 있다.</p>
 <ol>
 <li>각 코루틴의 상태 확인</li>
@@ -368,7 +368,7 @@ ga('send', 'pageview');
 
 
 
-    <a data-url="https://d2fault.github.io/2021/02/21/20210221-coroutine-context-and-dispatchers/" data-id="ckqqp8x5100e0h2odb2x90ai2" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://d2fault.github.io/2021/02/21/20210221-coroutine-context-and-dispatchers/" data-id="ckqqu9h9d00dyklodc8a9hpcd" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -508,6 +508,26 @@ ga('send', 'pageview');
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2021/07/06/20210706-java-bitmask-and-enumset/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_java.png)" alt="[JAVA] BitMask에 관한 자그마한 고찰, 그리고 EnumSet" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Java/">Java</a></p>
+                            <p class="item-title"><a href="/2021/07/06/20210706-java-bitmask-and-enumset/" class="title">[JAVA] BitMask에 관한 자그마한 고찰, 그리고 EnumSet</a></p>
+                            <p class="item-date"><time datetime="2021-07-05T16:30:18.000Z" itemprop="datePublished">2021-07-06</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2021/05/09/20210509-book-review-so-good-they-cant-ignore-you/" class="thumbnail">
     
     
@@ -585,26 +605,6 @@ ga('send', 'pageview');
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2021/01/18/20210114-coroutine-cancellation-and-timeouts/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/images/thumbnail/thumb_kotlin_android.png)" alt="[Kotlin] 코루틴(Coroutine) Cancellation and Timeouts" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Android/">Android</a></p>
-                            <p class="item-title"><a href="/2021/01/18/20210114-coroutine-cancellation-and-timeouts/" class="title">[Kotlin] 코루틴(Coroutine) Cancellation and Timeouts</a></p>
-                            <p class="item-date"><time datetime="2021-01-17T16:45:51.000Z" itemprop="datePublished">2021-01-18</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -614,7 +614,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/">Anything</a><span class="category-list-count">47</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/Diary/">Diary</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/Review/">Review</a><span class="category-list-count">29</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/">Blog</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/Hexo/">Hexo</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/Information/">Information</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/">IT</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Blockchain/">Blockchain</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Linux/">Linux</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Others/">Others</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">23</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Android/">Android</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/C-C/">C/C++</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Java/">Java</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li></ul></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/">Anything</a><span class="category-list-count">47</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/Diary/">Diary</a><span class="category-list-count">18</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/Review/">Review</a><span class="category-list-count">29</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/">Blog</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/Hexo/">Hexo</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/Information/">Information</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/">IT</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Blockchain/">Blockchain</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Linux/">Linux</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Others/">Others</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">24</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Android/">Android</a><span class="category-list-count">10</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/C-C/">C/C++</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li></ul></li></ul>
         </div>
     </div>
 
@@ -624,7 +624,7 @@ ga('send', 'pageview');
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/CentOS/" style="font-size: 12.86px;">CentOS</a> <a href="/tags/Composer/" style="font-size: 13.57px;">Composer</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Ethereum/" style="font-size: 16.43px;">Ethereum</a> <a href="/tags/Fabric/" style="font-size: 12.86px;">Fabric</a> <a href="/tags/GO/" style="font-size: 10px;">GO</a> <a href="/tags/Hyperledger/" style="font-size: 18.57px;">Hyperledger</a> <a href="/tags/ICO/" style="font-size: 12.86px;">ICO</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Solidity/" style="font-size: 12.86px;">Solidity</a> <a href="/tags/Tip/" style="font-size: 14.29px;">Tip</a> <a href="/tags/Tutorial/" style="font-size: 15.71px;">Tutorial</a> <a href="/tags/adb/" style="font-size: 10px;">adb</a> <a href="/tags/autoconf/" style="font-size: 10px;">autoconf</a> <a href="/tags/automake/" style="font-size: 10px;">automake</a> <a href="/tags/branch/" style="font-size: 10px;">branch</a> <a href="/tags/clean-code/" style="font-size: 10px;">clean code</a> <a href="/tags/consolidate/" style="font-size: 10px;">consolidate</a> <a href="/tags/context/" style="font-size: 10px;">context</a> <a href="/tags/coroutine/" style="font-size: 12.14px;">coroutine</a> <a href="/tags/deview/" style="font-size: 10px;">deview</a> <a href="/tags/dispatchers/" style="font-size: 10px;">dispatchers</a> <a href="/tags/ejs/" style="font-size: 10px;">ejs</a> <a href="/tags/exel/" style="font-size: 10px;">exel</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/geth/" style="font-size: 10px;">geth</a> <a href="/tags/git/" style="font-size: 11.43px;">git</a> <a href="/tags/kotlin/" style="font-size: 12.86px;">kotlin</a> <a href="/tags/m4/" style="font-size: 10px;">m4</a> <a href="/tags/mustache/" style="font-size: 10px;">mustache</a> <a href="/tags/node-js/" style="font-size: 11.43px;">node.js</a> <a href="/tags/powerpoint/" style="font-size: 10px;">powerpoint</a> <a href="/tags/ppt/" style="font-size: 10px;">ppt</a> <a href="/tags/redis/" style="font-size: 10.71px;">redis</a> <a href="/tags/refactoring/" style="font-size: 10px;">refactoring</a> <a href="/tags/research/" style="font-size: 10px;">research</a> <a href="/tags/sentinel/" style="font-size: 10.71px;">sentinel</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/tip/" style="font-size: 10.71px;">tip</a> <a href="/tags/token-economy/" style="font-size: 10.71px;">token economy</a> <a href="/tags/%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD/" style="font-size: 15px;">개발환경</a> <a href="/tags/%EB%82%98%EB%85%B8%ED%94%84%EB%A0%88%EC%86%8C/" style="font-size: 10px;">나노프레소</a> <a href="/tags/%EB%A6%AC%EB%B7%B0/" style="font-size: 20px;">리뷰</a> <a href="/tags/%EB%A7%A4%EC%8B%9C%EC%97%85/" style="font-size: 10px;">매시업</a> <a href="/tags/%EB%AA%85%EB%A0%B9%EC%96%B4/" style="font-size: 10px;">명령어</a> <a href="/tags/%EB%AC%B8%EB%B2%95/" style="font-size: 17.14px;">문법</a> <a href="/tags/%EB%B3%B5%EA%B5%AC/" style="font-size: 10px;">복구</a> <a href="/tags/%EB%B3%B5%EC%8B%B1/" style="font-size: 10.71px;">복싱</a> <a href="/tags/%EB%B8%94%EB%A3%A8%ED%88%AC%EC%8A%A4%EC%9D%B4%EC%96%B4%ED%8F%B0/" style="font-size: 10.71px;">블루투스이어폰</a> <a href="/tags/%EB%B9%85%EC%8A%A4%EB%B9%84/" style="font-size: 10px;">빅스비</a> <a href="/tags/%EC%83%9D%EA%B0%81/" style="font-size: 10px;">생각</a> <a href="/tags/%EC%84%A4%EC%B9%98/" style="font-size: 17.14px;">설치</a> <a href="/tags/%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85/" style="font-size: 10px;">스타트업</a> <a href="/tags/%EC%8B%9C%EB%A6%AC/" style="font-size: 10px;">시리</a> <a href="/tags/%EC%97%A0%EC%A7%80%ED%85%8D/" style="font-size: 10.71px;">엠지텍</a> <a href="/tags/%EC%98%81%ED%99%94/" style="font-size: 19.29px;">영화</a> <a href="/tags/%EC%9D%B8%EC%BD%94%EB%94%A9/" style="font-size: 10px;">인코딩</a> <a href="/tags/%EC%9D%BC%EC%83%81/" style="font-size: 17.86px;">일상</a> <a href="/tags/%EC%9E%90%EA%B2%A9-%EC%A6%9D%EB%AA%85/" style="font-size: 10px;">자격 증명</a> <a href="/tags/%EC%A7%80%EC%A0%81%EC%9E%AC%EC%82%B0%EA%B6%8C/" style="font-size: 10px;">지적재산권</a> <a href="/tags/%EC%B1%85/" style="font-size: 10px;">책</a> <a href="/tags/%EC%BB%A4%ED%94%BC/" style="font-size: 10px;">커피</a> <a href="/tags/%EC%BD%94%EC%9D%B8/" style="font-size: 11.43px;">코인</a> <a href="/tags/%EC%BD%94%ED%8B%80%EB%A6%B0/" style="font-size: 10px;">코틀린</a> <a href="/tags/%ED%86%A0%ED%81%B0%EC%9D%B4%EC%BD%94%EB%85%B8%EB%AF%B8/" style="font-size: 10.71px;">토큰이코노미</a> <a href="/tags/%ED%8A%B9%ED%97%88/" style="font-size: 10px;">특허</a> <a href="/tags/%ED%8C%8C%EC%9D%BC%EC%9E%85%EC%B6%9C%EB%A0%A5/" style="font-size: 10px;">파일입출력</a> <a href="/tags/%ED%95%80%ED%85%8C%ED%81%AC/" style="font-size: 10px;">핀테크</a> <a href="/tags/%ED%95%B4%EC%BB%A4%ED%86%A4/" style="font-size: 10px;">해커톤</a> <a href="/tags/%ED%9A%8C%EA%B3%A0/" style="font-size: 12.14px;">회고</a> <a href="/tags/%ED%9B%84%EA%B8%B0/" style="font-size: 10.71px;">후기</a>
+            <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/CentOS/" style="font-size: 12.86px;">CentOS</a> <a href="/tags/Composer/" style="font-size: 13.57px;">Composer</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Ethereum/" style="font-size: 16.43px;">Ethereum</a> <a href="/tags/Fabric/" style="font-size: 12.86px;">Fabric</a> <a href="/tags/GO/" style="font-size: 10px;">GO</a> <a href="/tags/Hyperledger/" style="font-size: 18.57px;">Hyperledger</a> <a href="/tags/ICO/" style="font-size: 12.86px;">ICO</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Solidity/" style="font-size: 12.86px;">Solidity</a> <a href="/tags/Tip/" style="font-size: 14.29px;">Tip</a> <a href="/tags/Tutorial/" style="font-size: 15.71px;">Tutorial</a> <a href="/tags/adb/" style="font-size: 10px;">adb</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/autoconf/" style="font-size: 10px;">autoconf</a> <a href="/tags/automake/" style="font-size: 10px;">automake</a> <a href="/tags/bitmask/" style="font-size: 10px;">bitmask</a> <a href="/tags/branch/" style="font-size: 10px;">branch</a> <a href="/tags/clean-code/" style="font-size: 10px;">clean code</a> <a href="/tags/consolidate/" style="font-size: 10px;">consolidate</a> <a href="/tags/context/" style="font-size: 10px;">context</a> <a href="/tags/coroutine/" style="font-size: 12.14px;">coroutine</a> <a href="/tags/deview/" style="font-size: 10px;">deview</a> <a href="/tags/dispatchers/" style="font-size: 10px;">dispatchers</a> <a href="/tags/ejs/" style="font-size: 10px;">ejs</a> <a href="/tags/enumset/" style="font-size: 10px;">enumset</a> <a href="/tags/exel/" style="font-size: 10px;">exel</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/geth/" style="font-size: 10px;">geth</a> <a href="/tags/git/" style="font-size: 11.43px;">git</a> <a href="/tags/kotlin/" style="font-size: 12.86px;">kotlin</a> <a href="/tags/m4/" style="font-size: 10px;">m4</a> <a href="/tags/mustache/" style="font-size: 10px;">mustache</a> <a href="/tags/node-js/" style="font-size: 11.43px;">node.js</a> <a href="/tags/powerpoint/" style="font-size: 10px;">powerpoint</a> <a href="/tags/ppt/" style="font-size: 10px;">ppt</a> <a href="/tags/redis/" style="font-size: 10.71px;">redis</a> <a href="/tags/refactoring/" style="font-size: 10px;">refactoring</a> <a href="/tags/research/" style="font-size: 10px;">research</a> <a href="/tags/sentinel/" style="font-size: 10.71px;">sentinel</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/tip/" style="font-size: 10.71px;">tip</a> <a href="/tags/token-economy/" style="font-size: 10.71px;">token economy</a> <a href="/tags/%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD/" style="font-size: 15px;">개발환경</a> <a href="/tags/%EB%82%98%EB%85%B8%ED%94%84%EB%A0%88%EC%86%8C/" style="font-size: 10px;">나노프레소</a> <a href="/tags/%EB%A6%AC%EB%B7%B0/" style="font-size: 20px;">리뷰</a> <a href="/tags/%EB%A7%A4%EC%8B%9C%EC%97%85/" style="font-size: 10px;">매시업</a> <a href="/tags/%EB%AA%85%EB%A0%B9%EC%96%B4/" style="font-size: 10px;">명령어</a> <a href="/tags/%EB%AC%B8%EB%B2%95/" style="font-size: 17.14px;">문법</a> <a href="/tags/%EB%B3%B5%EA%B5%AC/" style="font-size: 10px;">복구</a> <a href="/tags/%EB%B3%B5%EC%8B%B1/" style="font-size: 10.71px;">복싱</a> <a href="/tags/%EB%B8%94%EB%A3%A8%ED%88%AC%EC%8A%A4%EC%9D%B4%EC%96%B4%ED%8F%B0/" style="font-size: 10.71px;">블루투스이어폰</a> <a href="/tags/%EB%B9%85%EC%8A%A4%EB%B9%84/" style="font-size: 10px;">빅스비</a> <a href="/tags/%EC%83%9D%EA%B0%81/" style="font-size: 10px;">생각</a> <a href="/tags/%EC%84%A4%EC%B9%98/" style="font-size: 17.14px;">설치</a> <a href="/tags/%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85/" style="font-size: 10px;">스타트업</a> <a href="/tags/%EC%8B%9C%EB%A6%AC/" style="font-size: 10px;">시리</a> <a href="/tags/%EC%97%A0%EC%A7%80%ED%85%8D/" style="font-size: 10.71px;">엠지텍</a> <a href="/tags/%EC%98%81%ED%99%94/" style="font-size: 19.29px;">영화</a> <a href="/tags/%EC%9D%B8%EC%BD%94%EB%94%A9/" style="font-size: 10px;">인코딩</a> <a href="/tags/%EC%9D%BC%EC%83%81/" style="font-size: 17.86px;">일상</a> <a href="/tags/%EC%9E%90%EA%B2%A9-%EC%A6%9D%EB%AA%85/" style="font-size: 10px;">자격 증명</a> <a href="/tags/%EC%A7%80%EC%A0%81%EC%9E%AC%EC%82%B0%EA%B6%8C/" style="font-size: 10px;">지적재산권</a> <a href="/tags/%EC%B1%85/" style="font-size: 10px;">책</a> <a href="/tags/%EC%BB%A4%ED%94%BC/" style="font-size: 10px;">커피</a> <a href="/tags/%EC%BD%94%EC%9D%B8/" style="font-size: 11.43px;">코인</a> <a href="/tags/%EC%BD%94%ED%8B%80%EB%A6%B0/" style="font-size: 10px;">코틀린</a> <a href="/tags/%ED%86%A0%ED%81%B0%EC%9D%B4%EC%BD%94%EB%85%B8%EB%AF%B8/" style="font-size: 10.71px;">토큰이코노미</a> <a href="/tags/%ED%8A%B9%ED%97%88/" style="font-size: 10px;">특허</a> <a href="/tags/%ED%8C%8C%EC%9D%BC%EC%9E%85%EC%B6%9C%EB%A0%A5/" style="font-size: 10px;">파일입출력</a> <a href="/tags/%ED%95%80%ED%85%8C%ED%81%AC/" style="font-size: 10px;">핀테크</a> <a href="/tags/%ED%95%B4%EC%BB%A4%ED%86%A4/" style="font-size: 10px;">해커톤</a> <a href="/tags/%ED%9A%8C%EA%B3%A0/" style="font-size: 12.14px;">회고</a> <a href="/tags/%ED%9B%84%EA%B8%B0/" style="font-size: 10.71px;">후기</a>
         </div>
     </div>
 

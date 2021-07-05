@@ -9,8 +9,16 @@
 
 
     <url>
+        <loc>https://d2fault.github.io/2021/07/06/20210706-java-bitmask-and-enumset/</loc>
+        <lastmod>2021-07-05T16:29:22.988Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://d2fault.github.io/2021/02/21/20210221-coroutine-context-and-dispatchers/</loc>
-        <lastmod>2021-07-05T14:03:25.373Z</lastmod>
+        <lastmod>2021-07-05T16:26:47.540Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -385,7 +393,7 @@
     </url>
 
     <url>
-        <loc>https://d2fault.github.io/2018/08/08/20180808-movie-review-the-spy-gone-north/</loc>
+        <loc>https://d2fault.github.io/2018/08/08/20180808-diary/</loc>
         <lastmod>2021-05-03T07:01:02.467Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -393,7 +401,7 @@
     </url>
 
     <url>
-        <loc>https://d2fault.github.io/2018/08/08/20180808-diary/</loc>
+        <loc>https://d2fault.github.io/2018/08/08/20180808-movie-review-the-spy-gone-north/</loc>
         <lastmod>2021-05-03T07:01:02.467Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -841,7 +849,7 @@
     </url>
 
     <url>
-        <loc>https://d2fault.github.io/2018/02/19/20180219-diary/</loc>
+        <loc>https://d2fault.github.io/2018/02/19/20180219-hexo-publish-post/</loc>
         <lastmod>2021-05-03T07:01:02.394Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -849,7 +857,7 @@
     </url>
 
     <url>
-        <loc>https://d2fault.github.io/2018/02/19/20180219-hexo-publish-post/</loc>
+        <loc>https://d2fault.github.io/2018/02/19/20180219-diary/</loc>
         <lastmod>2021-05-03T07:01:02.394Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
