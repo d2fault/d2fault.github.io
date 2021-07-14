@@ -9,6 +9,20 @@
 
 
     <url>
+        <loc>https://d2fault.github.io/categories/Anything/Diary/</loc>
+        <lastmod>2021-07-14T04:45:39.937Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/categories/Anything/</loc>
+        <lastmod>2021-07-14T04:45:39.937Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://d2fault.github.io/categories/Programming/Java/</loc>
         <lastmod>2021-07-05T16:29:22.988Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -32,20 +46,6 @@
     <url>
         <loc>https://d2fault.github.io/categories/Anything/Review/</loc>
         <lastmod>2021-05-09T10:10:09.284Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://d2fault.github.io/categories/Anything/</loc>
-        <lastmod>2021-05-09T10:10:09.284Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://d2fault.github.io/categories/Anything/Diary/</loc>
-        <lastmod>2021-05-03T07:01:03.217Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
