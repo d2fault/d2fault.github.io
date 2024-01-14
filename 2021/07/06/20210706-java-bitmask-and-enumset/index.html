@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>[JAVA] BitMask에 관한 자그마한 고찰, 그리고 EnumSet | 잡동사니 수집광</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="android,bitmask,enumset" />
+    
+    <meta name="description" content="BitMask 를 사용하는 이유와, 적용하게 된 계기를 적어 보고자 한다. 그러나 결국 EnumSet을 사용하기로 결정하였기 때문에, BitMask 대신 EnumSet 사용을 권장한다. 이 글은 &#39;왜&#39; 사용해야 하는가와 &#39;어떤 장점&#39;이 있는지에 초점을 맞추어 작성하였다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[JAVA] BitMask에 관한 자그마한 고찰, 그리고 EnumSet">
+<meta property="og:url" content="https://d2fault.github.io/2021/07/06/20210706-java-bitmask-and-enumset/index.html">
+<meta property="og:site_name" content="잡동사니 수집광">
+<meta property="og:description" content="BitMask 를 사용하는 이유와, 적용하게 된 계기를 적어 보고자 한다. 그러나 결국 EnumSet을 사용하기로 결정하였기 때문에, BitMask 대신 EnumSet 사용을 권장한다. 이 글은 &#39;왜&#39; 사용해야 하는가와 &#39;어떤 장점&#39;이 있는지에 초점을 맞추어 작성하였다.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://d2fault.github.io/images/thumbnail/thumb_java.png">
+<meta property="article:published_time" content="2021-07-05T16:30:18.000Z">
+<meta property="article:modified_time" content="2024-01-03T14:01:13.911Z">
+<meta property="article:author" content="Jiyoung(d2fault)">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="bitmask">
+<meta property="article:tag" content="enumset">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://d2fault.github.io/images/thumbnail/thumb_java.png">
+    
+    <link rel="canonical" href="https://d2fault.github.io/2021/07/06/20210706-java-bitmask-and-enumset/"/>
+    
+        <link rel="alternate" href="/rss2.xml" title="잡동사니 수집광" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/favicon_d2fault.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" type="text/css" href="">
+    
+<link rel="stylesheet" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css">
+
+    
+<link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3QNGCBD959"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3QNGCBD959');
+</script>
+<!-- End Google Analytics -->
+
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Anything/">Anything</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Anything/Diary/">Diary</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Anything/Review/">Review</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Blog/">Blog</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Blog/Hexo/">Hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Blog/Information/">Information</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/IT/">IT</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/IT/Blockchain/">Blockchain</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/IT/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/IT/Others/">Others</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Android/">Android</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/C-C/">C/C++</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/JavaScript/">JavaScript</a></li></ul></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Programming/Java/">Java</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-20210706-java-bitmask-and-enumset" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        [JAVA] BitMask에 관한 자그마한 고찰, 그리고 EnumSet
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/07/06/20210706-java-bitmask-and-enumset/" class="article-date">
+       <time datetime="2021-07-05T16:30:18.000Z" itemprop="datePublished">2021-07-06</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/07/06/20210706-java-bitmask-and-enumset/" class="article-date">
+     <time datetime="2024-01-03T14:01:13.911Z" itemprop="dateModified">2024-01-03</time>
+  </a>
+</div>
+
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/android/" rel="tag">android</a>, <a class="tag-link-link" href="/tags/bitmask/" rel="tag">bitmask</a>, <a class="tag-link-link" href="/tags/enumset/" rel="tag">enumset</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 수평형 광고 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9881428965884966"
+     data-ad-slot="2468361412"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            <h1 id="개요"><a class="markdownIt-Anchor" href="#개요"></a> 개요</h1>
+<p><code>BitMask</code> 를 사용하는 이유와, 적용하게 된 계기를 적어 보고자 한다. 그러나 결국 <mark><strong><code>EnumSet</code> 을 사용하기로 결정하였기 때문에, <code>BitMask</code> 대신 <code>EnumSet</code> 사용을 권장한다.</strong></mark></p>
+<p>단, 이 포스팅에서 <code>BitMask</code> 와 <code>EnumSet</code> 을 디테일하게 다루지는 않을 것이다. <u><strong>이 글은 ‘왜’ 사용해야 하는가와 '어떤 장점’이 있는지에 초점을 맞추어 작성하였다.</strong></u></p>
+<br>
+<h1 id="bitmask요-갑자기요"><a class="markdownIt-Anchor" href="#bitmask요-갑자기요"></a> BitMask요? 갑자기요?</h1>
+<p>스무 살, C언어 강의를 듣던 언젠가, 어렴풋이 들었던 것도 같다. (<s>심지어 그 당시 교수님도 그리 중요하게 다루지 않으셨고, 나는 A+이지렁!</s>) 지금도 잘 모르지만 그땐 더욱 몰랐으니 논외로 치고, 처음 <code>BitMask</code> 를 이해해야만 했던 것은 약 1년 전이다. 우리 앱<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>이 특정 앱에게 <code>intent</code>로 정보를 요청하고, 수신해야 했는데 이때 수신한 값이 <code>BitMask</code> 형태라는 것이다. 헤헤. 청천벽력 같았다. ‘어차피 <code>intent</code>에 <code>data</code> 담아서 줄 거면 그 값 그대로 주면 되지 굳이?’ 라는 생각이 들었지만, 그렇게 준다는 걸 어떡해. 앞으로 쓸 일도 없을 것 같고, 대충 이런 게 있구나 정도로만 이해하고 넘어갔다.</p>
+<br>
+<h1 id="코드-구경-이해-깨달음-적용"><a class="markdownIt-Anchor" href="#코드-구경-이해-깨달음-적용"></a> 코드 구경, 이해, 깨달음, 적용</h1>
+<p>다른 업무로 옆 파트 과장님과 의견 교환 중에 우연히 과장님의 코드를 볼 기회가 생겼다. 업무 관련해서 조언을 구했는데, 과장님께서 본인 코드<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> 를 적절히 고치면 웬만해서 해결될 거라고 하셨다. 그렇다. 예상했겠지만, 이 코드 안에 <code>BitMask</code> 를 사용한 비즈니스 로직이 포함되어 있었다.</p>
+<p>후. 이렇게 다시 만날 줄 몰랐다. 그러나 더는 피할 곳이 없었다. 이전엔 이미 마스킹된 값을 풀어내는 것에 그쳤지만, 이번엔 이것을 제대로 적용해 볼 수 있는 기회였다. 과장님께서 코드까지 주셨는데 두려울 게 뭐가 있겠습니까.</p>
+<br>
+<h1 id="그래서-bitmask가-뭔데"><a class="markdownIt-Anchor" href="#그래서-bitmask가-뭔데"></a> 그래서 BitMask가 뭔데?</h1>
+<p>말 그대로 <code>bit</code> 에 관련된 것이다. <code>bit</code> 는 이진 숫자를 뜻하는 말로, 컴퓨터에서 사용되는 데이터의 최소 단위이다. 맞다, 0과 1! 그런데 왜 <code>bit</code> 에 <code>mask</code> 가 붙는 걸까? <code>BitMask</code> 는 0과 1로만 이루어진 <code>bit</code> 의 특성을 이용한 테크닉의 일종이다. 결론만 말하자면, <strong>이 테크닉은 ‘조건 지옥’ 에서  조금이나마 벗어날 수 있도록 해 준다.</strong> 아래 코드를 보자.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HobbyManager</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 0000 0000 부터 1000 0000 까지 총 9가지의 기준을 가질 수 있다.</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> NONE = <span class="number">0x0</span>;         <span class="comment">// 0000 0000</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> WALKING = <span class="number">0x1</span>;      <span class="comment">// 0000 0001</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> READING = <span class="number">0x2</span>;      <span class="comment">// 0000 0010</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SINGING = <span class="number">0x4</span>;      <span class="comment">// 0000	0100</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> RUNNING = <span class="number">0x8</span>;      <span class="comment">// 0000 1000</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PROGRAMMING = <span class="number">0x10</span>; <span class="comment">// 0001 0000</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SWIMMING = <span class="number">0x20</span>;    <span class="comment">// 0010 0000</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DANCING = <span class="number">0x40</span>;     <span class="comment">// 0100 0000</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> SLEEPING = <span class="number">0x80</span>;    <span class="comment">// 1000 0000</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> hobbyFlags;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">hasHobby</span><span class="params">(<span class="keyword">int</span> flag)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (flag &amp; hobbyFlags) == flag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addHobby</span><span class="params">(<span class="keyword">int</span> flag)</span> </span>&#123;</span><br><span class="line">        hobbyFlags |= flag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setHobbyFlags</span><span class="params">(<span class="keyword">int</span> flags)</span> </span>&#123;</span><br><span class="line">        hobbyFlags = flags;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><s>작명이 영 별로이긴 하지만,</s> 위 코드는 누군가의 취미를 설정하고, 추가하고, 특정 취미 보유 여부를 판단할 수 있도록 한다. 사용 방법은 간단하다. 모든 함수가  <code>static</code> 함수로 선언되어 있기에 코드 어느 곳에서나, 필요할 때 위의 함수를 호출하기만 하면 된다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 초기 취미 Setting</span></span><br><span class="line">HobbyManager.setHobbyFlags(HobbyManager.WALKING |</span><br><span class="line">                          HobbyManager.SINGING |</span><br><span class="line">                          HobbyManager.DANCING);</span><br><span class="line"><span class="comment">// 신규 취미 추가</span></span><br><span class="line">HobbyManager.addHobby(HobbyManager.PROGRAMMING);</span><br><span class="line"><span class="comment">// 취미 보유 여부 확인</span></span><br><span class="line">HobbyManager.hasHobby(HobbyManager.SINGING);</span><br></pre></td></tr></table></figure>
+<p>사실, <code>HobbyManager</code> 를 작성한 본질적인 이유는 <mark><strong>취미 보유 여부 확인</strong></mark> 이라고 해도 과언이 아니다. 만약, <code>BitMask</code> 를 사용하지 않는다면 어떤 코드를 작성할 수 있을까?</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ArrayList&lt;String&gt; hobbies = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">hobbies.add(<span class="string">&quot;WALKING&quot;</span>);</span><br><span class="line">hobbies.add(<span class="string">&quot;SINGING&quot;</span>);</span><br><span class="line">hobbies.add(<span class="string">&quot;DANCING&quot;</span>);</span><br><span class="line">hobbies.add(<span class="string">&quot;PROGRAMMING&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasHobby</span><span class="params">(<span class="meta">@NonNull</span> String hobby)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; hobbies.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (hobby.equals(hobbies.get(i))) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>적당히 못난 코드로 작성해 보았다. <code>hasHobby</code> 에서 판단하고 싶은 <code>hobby</code> 를 전달받고, 유저의 취미 리스트를 0부터 하나씩 비교하여 존재할 경우 <code>true</code>, 아니면 <code>false</code> 를 반환하게 된다. 물론, 이렇게 개발해도 크리티컬한 문제는 없다. 이런 코드들이 쌓이고 쌓이면 문제가 될 수는 있겠지만 말이다. 그렇지만 코드가 예쁘고, 조금 더 효율적이면 기분이 조크든요. 기왕 하는 거 예쁘게 작성하면 모두가 행복합니다!</p>
+<br>
+<h1 id="다시-돌아와서"><a class="markdownIt-Anchor" href="#다시-돌아와서"></a> 다시 돌아와서</h1>
+<p>막상 적용하니 문제가 생겼다. 위의 코드를 예시로 들면, 우리 앱에서 지원하고 싶은 취미가 9가지가 넘는단 사실이다. 이 경우에 <code>int</code> 형 대신 <code>long</code> 을 사용해서 더 많은 기준을 잡을 수 있다고는 하는데, 관련 예시가 없어 선뜻 적용하기가 어려웠다. 방법을 찾기 위해 열심히 구글링을 하다가, <code>BitMask</code> 대신 사용할 수 있는 엄청난 것을 발견했다. <s>(자바로 안드로이드 개발하지만 자바를 잘 모르는, 또 나만 몰랐겠지?)</s> 나와 같은 고민을 하는 사람이 없도록, Java는 위대했던 거시다.</p>
+<br>
+<h1 id="결론"><a class="markdownIt-Anchor" href="#결론"></a> 결론</h1>
+<p><mark><strong><code>EnumSet</code> 쓰세요. 두 번 쓰세요.</strong></mark> 특징을 정리하면 다음과 같다.</p>
+<ul>
+<li><code>EnumSet</code> 에서 제공하는 모든 메서드는 산술 비트 연산을 사용하여 구현되므로 일반적인 <strong>연산 속도가 굉장히 빠르다.</strong></li>
+<li><code>HashSet</code> 과 같은 다른 <code>Set</code> 구현체와 비교했을 때, 데이터가 예상 가능한 순서로 저장되어 있다.
+<ul>
+<li>계산시 하나의 비트만이 필요하므로 더 빠르다.</li>
+<li><code>HashSet</code> 처럼 데이터 저장 버킷을 찾을 때 hash code를 계산할 필요가 없다.</li>
+</ul>
+</li>
+<li><code>EnumSet</code> 은 내부적으로 big vector로 표현된다.
+<ul>
+<li>비트 벡터의 특성상 <strong>더 작은 메모리를 사용한다.</strong></li>
+</ul>
+</li>
+</ul>
+<p>bit flag, BitMask는 고전적인 방법(…)이라고 한다. 굳이 쓰지 말고, 내부적으로 bit flag를 사용하는 <code>EnumSet</code> 을 사용하자. 그럼, 위의 예시 코드를 바꿔 봐야지!</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HobbyManager</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">Hobbies</span> </span>&#123;</span><br><span class="line">      NONE, WALKING, READING,</span><br><span class="line">      SINGING, RUNNING, PROGRAMMING,</span><br><span class="line">      SWIMMING, DANCING, SLEEPING,</span><br><span class="line">      <span class="comment">// 신규 취미 2종 추가</span></span><br><span class="line">      DRAWING, BAKING</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> EnumSet&lt;Hobbies&gt; hobbyFlags;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">hasHobby</span><span class="params">(Hobbies flag)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> hobbyFlags.contains(flag);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addHobby</span><span class="params">(Hobbies flag)</span> </span>&#123;</span><br><span class="line">        hobbyFlags.add(flag);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setHobbyFlags</span><span class="params">(EnumSet&lt;Hobbies&gt; flags)</span> </span>&#123;</span><br><span class="line">        hobbyFlags = flags;</span><br><span class="line">        Log.i(TAG, <span class="string">&quot;hobbyFlags Flags: &quot;</span> + hobbyFlags);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>다음과 같이 사용하면 된다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 초기 취미 Setting</span></span><br><span class="line">EnumSet&lt;HobbyManager.Hobbies&gt; hobbyEnumSet = EnumSet.of(HobbyManager.Hobbies.WALKING,</span><br><span class="line">                HobbyManager.Hobbies.SINGING,</span><br><span class="line">                HobbyManager.Hobbies.DANCING);</span><br><span class="line">HobbyManager.setHobbyFlags(hobbyEnumSet);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 신규 취미 추가</span></span><br><span class="line">HobbyManager.addHobby(HobbyManager.Hobbies.PROGRAMMING);</span><br><span class="line"><span class="comment">// 취미 보유 여부 확인</span></span><br><span class="line">HobbyManager.hasHobby(HobbyManager.Hobbies.SINGING);</span><br></pre></td></tr></table></figure>
+<p>이번 개발 건에서는 '보유 여부 확인’만 하면 되어서 이정도 코드로 충분했으나, 만일 ‘제거’ 가 필요하다면 <code>EnumSet</code> 에서 지원하는 <code>remove</code> 를  <code>HobbyManager</code> 에 적용하여 확장하면 된다. Easy!</p>
+<br>
+<h1 id="참고"><a class="markdownIt-Anchor" href="#참고"></a> 참고</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&amp;blogId=zero_kjy&amp;logNo=220794334785">10진수를 2진수 코드화</a></li>
+<li><a target="_blank" rel="noopener" href="https://mygumi.tistory.com/361">비트마스크(BitMask)는 무엇인가?</a></li>
+<li><a target="_blank" rel="noopener" href="https://sime.tistory.com/65">Java 데이터 형식 범위</a></li>
+<li><a target="_blank" rel="noopener" href="https://johngrib.github.io/wiki/java-enum/">Java enum의 사용</a></li>
+<li><a target="_blank" rel="noopener" href="https://scshim.tistory.com/253">Enum, 자바의 열거타입을 알아보자</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/enumset-class-java/">EnumSet in Java</a></li>
+</ul>
+<br>
+<hr class="footnotes-sep" />
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>모 기업에서 Android Application 개발을 하고 있음. 다만, 일반적인 Android App과는 약간 다른 형태로, 특성 상 타 앱들과 intent를 주고받는 일이 잦다. <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>같은 팀이기에 서로의 코드는 언제든지 열람 가능하다. <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+
+        </div>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사각형 광고 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9881428965884966"
+     data-ad-slot="1478713370"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://d2fault.github.io/2021/07/06/20210706-java-bitmask-and-enumset/" data-id="clqxwyk540006z31u6qa34iwc" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/d2fault" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/rss2.xml" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/07/19/20210710-android-audio-focus-1/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            [Android] AudioFocus 알아보기(1) - 왜, 어떻게 사용하는가
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/05/09/20210509-book-review-so-good-they-cant-ignore-you/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">[Book] 열정의 배신(하고 싶은 일만 하면 정말 행복해질까)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/12/31/20231231-diary/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_diary.png)" alt="[Diary] 2023년 회고하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Anything/">Anything</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Anything/Diary/">Diary</a></p>
+                            <p class="item-title"><a href="/2023/12/31/20231231-diary/" class="title">[Diary] 2023년 회고하기</a></p>
+                            <p class="item-date"><time datetime="2023-12-31T12:03:03.000Z" itemprop="datePublished">2023-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/05/07/20230507-android-design-module-development-story/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_android.png)" alt="[Android] 안드로이드 개발자의 디자인 시스템(모듈) 개발기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2023/05/07/20230507-android-design-module-development-story/" class="title">[Android] 안드로이드 개발자의 디자인 시스템(모듈) 개발기</a></p>
+                            <p class="item-date"><time datetime="2023-05-07T08:18:16.000Z" itemprop="datePublished">2023-05-07</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/12/31/20221231-diary/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_diary.png)" alt="[Diary] 2022년 회고하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Anything/">Anything</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Anything/Diary/">Diary</a></p>
+                            <p class="item-title"><a href="/2022/12/31/20221231-diary/" class="title">[Diary] 2022년 회고하기</a></p>
+                            <p class="item-date"><time datetime="2022-12-31T11:12:22.000Z" itemprop="datePublished">2022-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/12/25/20221225-2023-goodnote-diary-and-free-note-templates-for-free/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_post.png)" alt="[GoodNote] 2023 굿노트 다이어리, 프리노트 무료 배포" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blog/">Blog</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Blog/Information/">Information</a></p>
+                            <p class="item-title"><a href="/2022/12/25/20221225-2023-goodnote-diary-and-free-note-templates-for-free/" class="title">[GoodNote] 2023 굿노트 다이어리, 프리노트 무료 배포</a></p>
+                            <p class="item-date"><time datetime="2022-12-25T13:36:22.000Z" itemprop="datePublished">2022-12-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/07/21/20220721-android-contentobserver/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_android.png)" alt="[Android] ContentObserver 알아보기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2022/07/21/20220721-android-contentobserver/" class="title">[Android] ContentObserver 알아보기</a></p>
+                            <p class="item-date"><time datetime="2022-07-21T13:02:33.000Z" itemprop="datePublished">2022-07-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/">Anything</a><span class="category-list-count">55</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/Diary/">Diary</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/Review/">Review</a><span class="category-list-count">34</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/">Blog</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/Hexo/">Hexo</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/Information/">Information</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/">IT</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Blockchain/">Blockchain</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Linux/">Linux</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Others/">Others</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Android/">Android</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/C-C/">C/C++</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android/" style="font-size: 10.71px;">Android</a> <a href="/tags/CentOS/" style="font-size: 12.86px;">CentOS</a> <a href="/tags/Composer/" style="font-size: 13.57px;">Composer</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Ethereum/" style="font-size: 16.43px;">Ethereum</a> <a href="/tags/Fabric/" style="font-size: 12.86px;">Fabric</a> <a href="/tags/GO/" style="font-size: 10px;">GO</a> <a href="/tags/Hyperledger/" style="font-size: 18.57px;">Hyperledger</a> <a href="/tags/ICO/" style="font-size: 12.86px;">ICO</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Solidity/" style="font-size: 12.86px;">Solidity</a> <a href="/tags/Tip/" style="font-size: 14.29px;">Tip</a> <a href="/tags/Tutorial/" style="font-size: 15.71px;">Tutorial</a> <a href="/tags/adb/" style="font-size: 10px;">adb</a> <a href="/tags/android/" style="font-size: 16.43px;">android</a> <a href="/tags/architect/" style="font-size: 10px;">architect</a> <a href="/tags/audiofocus/" style="font-size: 10.71px;">audiofocus</a> <a href="/tags/autoconf/" style="font-size: 10px;">autoconf</a> <a href="/tags/automake/" style="font-size: 10px;">automake</a> <a href="/tags/bitmask/" style="font-size: 10px;">bitmask</a> <a href="/tags/branch/" style="font-size: 10px;">branch</a> <a href="/tags/clean-code/" style="font-size: 10px;">clean code</a> <a href="/tags/consolidate/" style="font-size: 10px;">consolidate</a> <a href="/tags/contentobserver/" style="font-size: 10px;">contentobserver</a> <a href="/tags/contentprovider/" style="font-size: 10px;">contentprovider</a> <a href="/tags/context/" style="font-size: 10px;">context</a> <a href="/tags/coroutine/" style="font-size: 12.14px;">coroutine</a> <a href="/tags/customdialog/" style="font-size: 10px;">customdialog</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/deview/" style="font-size: 10px;">deview</a> <a href="/tags/dispatchers/" style="font-size: 10px;">dispatchers</a> <a href="/tags/ejs/" style="font-size: 10px;">ejs</a> <a href="/tags/enumset/" style="font-size: 10px;">enumset</a> <a href="/tags/exel/" style="font-size: 10px;">exel</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fullscreen/" style="font-size: 10px;">fullscreen</a> <a href="/tags/geth/" style="font-size: 10px;">geth</a> <a href="/tags/git/" style="font-size: 11.43px;">git</a> <a href="/tags/goodnote/" style="font-size: 10px;">goodnote</a> <a href="/tags/java/" style="font-size: 11.43px;">java</a> <a href="/tags/kotlin/" style="font-size: 14.29px;">kotlin</a> <a href="/tags/m4/" style="font-size: 10px;">m4</a> <a href="/tags/module/" style="font-size: 10px;">module</a> <a href="/tags/mustache/" style="font-size: 10px;">mustache</a> <a href="/tags/node-js/" style="font-size: 11.43px;">node.js</a> <a href="/tags/powerpoint/" style="font-size: 10px;">powerpoint</a> <a href="/tags/ppt/" style="font-size: 10px;">ppt</a> <a href="/tags/process/" style="font-size: 10px;">process</a> <a href="/tags/redis/" style="font-size: 10.71px;">redis</a> <a href="/tags/refactoring/" style="font-size: 10px;">refactoring</a> <a href="/tags/research/" style="font-size: 10px;">research</a> <a href="/tags/sdk/" style="font-size: 10px;">sdk</a> <a href="/tags/sentinel/" style="font-size: 10.71px;">sentinel</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/task/" style="font-size: 10px;">task</a> <a href="/tags/tip/" style="font-size: 10.71px;">tip</a> <a href="/tags/token-economy/" style="font-size: 10.71px;">token economy</a> <a href="/tags/webview/" style="font-size: 10.71px;">webview</a> <a href="/tags/%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD/" style="font-size: 15px;">개발환경</a> <a href="/tags/%EA%B5%BF%EB%85%B8%ED%8A%B8/" style="font-size: 10px;">굿노트</a> <a href="/tags/%EB%82%98%EB%85%B8%ED%94%84%EB%A0%88%EC%86%8C/" style="font-size: 10px;">나노프레소</a> <a href="/tags/%EB%A6%AC%EB%B7%B0/" style="font-size: 20px;">리뷰</a> <a href="/tags/%EB%A7%A4%EC%8B%9C%EC%97%85/" style="font-size: 10px;">매시업</a> <a href="/tags/%EB%AA%85%EB%A0%B9%EC%96%B4/" style="font-size: 10px;">명령어</a> <a href="/tags/%EB%AC%B8%EB%B2%95/" style="font-size: 17.14px;">문법</a> <a href="/tags/%EB%B3%B5%EA%B5%AC/" style="font-size: 10px;">복구</a> <a href="/tags/%EB%B3%B5%EC%8B%B1/" style="font-size: 10.71px;">복싱</a> <a href="/tags/%EB%B8%94%EB%A3%A8%ED%88%AC%EC%8A%A4%EC%9D%B4%EC%96%B4%ED%8F%B0/" style="font-size: 10.71px;">블루투스이어폰</a> <a href="/tags/%EB%B9%84%ED%88%AC%EB%B9%84/" style="font-size: 11.43px;">비투비</a> <a href="/tags/%EB%B9%85%EC%8A%A4%EB%B9%84/" style="font-size: 10px;">빅스비</a> <a href="/tags/%EC%83%9D%EA%B0%81/" style="font-size: 10px;">생각</a> <a href="/tags/%EC%84%A4%EC%B9%98/" style="font-size: 17.14px;">설치</a> <a href="/tags/%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85/" style="font-size: 10px;">스타트업</a> <a href="/tags/%EC%8B%9C%EB%A6%AC/" style="font-size: 10px;">시리</a> <a href="/tags/%EC%97%A0%EC%A7%80%ED%85%8D/" style="font-size: 10.71px;">엠지텍</a> <a href="/tags/%EC%98%81%ED%99%94/" style="font-size: 19.29px;">영화</a> <a href="/tags/%EC%9D%B8%EC%BD%94%EB%94%A9/" style="font-size: 10px;">인코딩</a> <a href="/tags/%EC%9D%BC%EC%83%81/" style="font-size: 17.86px;">일상</a> <a href="/tags/%EC%9E%90%EA%B2%A9-%EC%A6%9D%EB%AA%85/" style="font-size: 10px;">자격 증명</a> <a href="/tags/%EC%A7%80%EC%A0%81%EC%9E%AC%EC%82%B0%EA%B6%8C/" style="font-size: 10px;">지적재산권</a> <a href="/tags/%EC%B1%85/" style="font-size: 10.71px;">책</a> <a href="/tags/%EC%BB%A4%ED%94%BC/" style="font-size: 10px;">커피</a> <a href="/tags/%EC%BD%94%EC%9D%B8/" style="font-size: 11.43px;">코인</a> <a href="/tags/%EC%BD%94%ED%8B%80%EB%A6%B0/" style="font-size: 10px;">코틀린</a> <a href="/tags/%EC%BD%98%EC%84%9C%ED%8A%B8/" style="font-size: 11.43px;">콘서트</a> <a href="/tags/%ED%85%9C%ED%94%8C%EB%A6%BF/" style="font-size: 10px;">템플릿</a> <a href="/tags/%ED%86%A0%ED%81%B0%EC%9D%B4%EC%BD%94%EB%85%B8%EB%AF%B8/" style="font-size: 10.71px;">토큰이코노미</a> <a href="/tags/%ED%8A%B9%ED%97%88/" style="font-size: 10px;">특허</a> <a href="/tags/%ED%8C%8C%EC%9D%BC%EC%9E%85%EC%B6%9C%EB%A0%A5/" style="font-size: 10px;">파일입출력</a> <a href="/tags/%ED%95%80%ED%85%8C%ED%81%AC/" style="font-size: 10px;">핀테크</a> <a href="/tags/%ED%95%B4%EC%BB%A4%ED%86%A4/" style="font-size: 10px;">해커톤</a> <a href="/tags/%ED%9A%8C%EA%B3%A0/" style="font-size: 14.29px;">회고</a> <a href="/tags/%ED%9B%84%EA%B8%B0/" style="font-size: 10.71px;">후기</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://blog.nullptr.kr">vee&#39;s Blog</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+                <div class="widget-wrap widget-float">
+    
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- huemen sidebar -->
+        <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-9881428965884966"
+                data-ad-slot="9267898354"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    
+    </div>
+            
+        
+    </div>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사각형 광고 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9881428965884966"
+     data-ad-slot="1478713370"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2024 Jiyoung(d2fault)</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'd2fault';
+    
+    
+    var disqus_url = 'https://d2fault.github.io/2021/07/06/20210706-java-bitmask-and-enumset/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+      <script data-ad-client="ca-pub-9881428965884966" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

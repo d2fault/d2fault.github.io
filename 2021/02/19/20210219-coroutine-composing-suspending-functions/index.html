@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>[Kotlin] 코루틴(Coroutine) Composing Suspending Functions | 잡동사니 수집광</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="kotlin,coroutine,android" />
+    
+    <meta name="description" content="이번 포스팅에서는 코루틴의 일시 중단 함수를 조합하여 활용하는 방법을 알아본다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Kotlin] 코루틴(Coroutine) Composing Suspending Functions">
+<meta property="og:url" content="https://d2fault.github.io/2021/02/19/20210219-coroutine-composing-suspending-functions/index.html">
+<meta property="og:site_name" content="잡동사니 수집광">
+<meta property="og:description" content="이번 포스팅에서는 코루틴의 일시 중단 함수를 조합하여 활용하는 방법을 알아본다.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://d2fault.github.io/images/thumbnail/thumb_kotlin_android.png">
+<meta property="article:published_time" content="2021-02-18T16:25:50.000Z">
+<meta property="article:modified_time" content="2024-01-03T14:01:13.886Z">
+<meta property="article:author" content="Jiyoung(d2fault)">
+<meta property="article:tag" content="kotlin">
+<meta property="article:tag" content="coroutine">
+<meta property="article:tag" content="android">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://d2fault.github.io/images/thumbnail/thumb_kotlin_android.png">
+    
+    <link rel="canonical" href="https://d2fault.github.io/2021/02/19/20210219-coroutine-composing-suspending-functions/"/>
+    
+        <link rel="alternate" href="/rss2.xml" title="잡동사니 수집광" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/favicon_d2fault.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" type="text/css" href="">
+    
+<link rel="stylesheet" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css">
+
+    
+<link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3QNGCBD959"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3QNGCBD959');
+</script>
+<!-- End Google Analytics -->
+
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Anything/">Anything</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Anything/Diary/">Diary</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Anything/Review/">Review</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Blog/">Blog</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Blog/Hexo/">Hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Blog/Information/">Information</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/IT/">IT</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/IT/Blockchain/">Blockchain</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/IT/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/IT/Others/">Others</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Android/">Android</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/C-C/">C/C++</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/JavaScript/">JavaScript</a></li></ul></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Programming/Android/">Android</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-20210219-coroutine-composing-suspending-functions" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        [Kotlin] 코루틴(Coroutine) Composing Suspending Functions
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/02/19/20210219-coroutine-composing-suspending-functions/" class="article-date">
+       <time datetime="2021-02-18T16:25:50.000Z" itemprop="datePublished">2021-02-19</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/02/19/20210219-coroutine-composing-suspending-functions/" class="article-date">
+     <time datetime="2024-01-03T14:01:13.886Z" itemprop="dateModified">2024-01-03</time>
+  </a>
+</div>
+
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/android/" rel="tag">android</a>, <a class="tag-link-link" href="/tags/coroutine/" rel="tag">coroutine</a>, <a class="tag-link-link" href="/tags/kotlin/" rel="tag">kotlin</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 수평형 광고 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9881428965884966"
+     data-ad-slot="2468361412"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            <h1 id="composing-suspending-functions"><a class="markdownIt-Anchor" href="#composing-suspending-functions"></a> Composing Suspending Functions</h1>
+<p>이번 포스팅에서는 코루틴의 일시 중단 함수를 조합하여 활용하는 방법을 알아본다.</p>
+<p>※ IntelliJ나 Android Studio가 설치되어 있지 않다면 Kotlin 공식 사이트에서 지원하는 <mark><strong>온라인 IDE(<a target="_blank" rel="noopener" href="https://play.kotlinlang.org/">Kotlin Playground</a>)를 사용하여 아래 코드를 실행할 수 있다.</strong></mark></p>
+<br>
+<h2 id="sequential-by-default"><a class="markdownIt-Anchor" href="#sequential-by-default"></a> Sequential by default</h2>
+<p>아래 코드는 어떤 유용한 기능(?) 두 가지를 순차적으로 실행 및 조합하여 결과를 내도록 구현되어 있다.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> = runBlocking&lt;<span class="built_in">Unit</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">val</span> time = measureTimeMillis &#123;</span><br><span class="line">        <span class="keyword">val</span> one = doSomethingUsefulOne()</span><br><span class="line">        <span class="keyword">val</span> two = doSomethingUsefulTwo()</span><br><span class="line">        println(<span class="string">&quot;The answer is <span class="subst">$&#123;one + two&#125;</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    println(<span class="string">&quot;Completed in <span class="variable">$time</span> ms&quot;</span>)    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">doSomethingUsefulOne</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">    <span class="comment">// pretend we are doing something useful here</span></span><br><span class="line">    delay(<span class="number">1000L</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">13</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">doSomethingUsefulTwo</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">    <span class="comment">// pretend we are doing something useful here, too</span></span><br><span class="line">    delay(<span class="number">1000L</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">29</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><mark><strong>코루틴에서는 일반 코드처럼 작성하면 비동기적인 기능일지라도 순차적으로 실행한다.</strong></mark> 즉, 위의 코드는</p>
+<ol>
+<li><code>doSomethingUsefulOne()</code> 실행</li>
+<li><code>doSomethingUsefulTwo()</code> 실행</li>
+<li><code>println(&quot;The answer is $&#123;one + two&#125;&quot;)</code> 실행</li>
+</ol>
+<p>순서로 진행된다.</p>
+<br>
+<h2 id="concurrent-using-async"><a class="markdownIt-Anchor" href="#concurrent-using-async"></a> Concurrent using async</h2>
+<p>만약 두 연산에 dependency가 없다면 동시에 실행하는 것이 리소스를 효율적으로 사용할 수 있을 것이다. 아래 코드를 참고하자.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> = runBlocking&lt;<span class="built_in">Unit</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">val</span> time = measureTimeMillis &#123;</span><br><span class="line">        <span class="keyword">val</span> one = async &#123; doSomethingUsefulOne() &#125;</span><br><span class="line">        <span class="keyword">val</span> two = async &#123; doSomethingUsefulTwo() &#125;</span><br><span class="line">        println(<span class="string">&quot;The answer is <span class="subst">$&#123;one.await() + two.await()&#125;</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    println(<span class="string">&quot;Completed in <span class="variable">$time</span> ms&quot;</span>)    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">doSomethingUsefulOne</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">    delay(<span class="number">1000L</span>) <span class="comment">// pretend we are doing something useful here</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">13</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">doSomethingUsefulTwo</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">    delay(<span class="number">1000L</span>) <span class="comment">// pretend we are doing something useful here, too</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">29</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>코루틴 빌더인 <code>async</code> 키워드를 사용하면 비동기를 비동기처럼(?) 동작하게 할 수 있다.</p>
+<br>
+<h2 id="lazily-started-async"><a class="markdownIt-Anchor" href="#lazily-started-async"></a> Lazily started async</h2>
+<p><code>async</code> 로 실행하는 코루틴을 ‘나중에’ 실행하는 방법을 보여주는 예제이다.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> = runBlocking&lt;<span class="built_in">Unit</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">val</span> time = measureTimeMillis &#123;</span><br><span class="line">        <span class="keyword">val</span> one = async(start = CoroutineStart.LAZY) &#123; doSomethingUsefulOne() &#125;</span><br><span class="line">        <span class="keyword">val</span> two = async(start = CoroutineStart.LAZY) &#123; doSomethingUsefulTwo() &#125;</span><br><span class="line">        <span class="comment">// some computation</span></span><br><span class="line">        one.start() <span class="comment">// start the first one</span></span><br><span class="line">        two.start() <span class="comment">// start the second one</span></span><br><span class="line">        println(<span class="string">&quot;The answer is <span class="subst">$&#123;one.await() + two.await()&#125;</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    println(<span class="string">&quot;Completed in <span class="variable">$time</span> ms&quot;</span>)    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">doSomethingUsefulOne</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">    delay(<span class="number">1000L</span>) <span class="comment">// pretend we are doing something useful here</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">13</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">doSomethingUsefulTwo</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">    delay(<span class="number">1000L</span>) <span class="comment">// pretend we are doing something useful here, too</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">29</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>async</code> 의 매개변수에 <code>start = CoroutineStart.LAZY</code> 를 추가하게 되면 해당 코루틴은 바로 실행되지 않는다. <code>LAZY</code> 가 걸린 코루틴을 <code>start()</code> 하거나 <code>await()</code> 를 해 줄 때 비로소 값을 받을 수 있다.</p>
+<p><code>async</code> 는 인자를 받을 수 있는데, 아무 인자도 넣지 않으면 바로 실행하는(<code>start = CoroutineStart.Default</code>) 것이 default이다. 즉, <code>start()</code> 나 <code>await()</code> 를 만나지 않아도 내부적으로는 이미 그 코루틴이 실행된 상태라는 의미이다. 다음의 코드를 실행해 보면 이해가 조금 쉬울 듯하다.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> = runBlocking&lt;<span class="built_in">Unit</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">0</span></span><br><span class="line">    <span class="keyword">var</span> b = <span class="number">0</span></span><br><span class="line">    <span class="keyword">val</span> time = measureTimeMillis &#123;</span><br><span class="line">        <span class="keyword">val</span> one = async(start = CoroutineStart.LAZY) &#123; doSomethingUsefulOne() &#125;</span><br><span class="line">        <span class="keyword">val</span> two = async(start = CoroutineStart.LAZY) &#123; doSomethingUsefulTwo() &#125;</span><br><span class="line">        <span class="comment">// some computation</span></span><br><span class="line">        one.start() <span class="comment">// start the first one</span></span><br><span class="line">        two.start() <span class="comment">// start the second one</span></span><br><span class="line">        println(<span class="string">&quot;The answer is <span class="subst">$&#123;one.await() + two.await()&#125;</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    println(<span class="string">&quot;Completed in <span class="variable">$time</span> ms&quot;</span>)    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">doSomethingUsefulOne</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">    delay(<span class="number">1000L</span>) <span class="comment">// pretend we are doing something useful here</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">13</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">doSomethingUsefulTwo</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">    delay(<span class="number">1000L</span>) <span class="comment">// pretend we are doing something useful here, too</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">29</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="참고"><a class="markdownIt-Anchor" href="#참고"></a> 참고</h3>
+<ul>
+<li><code>start()</code>
+<ul>
+<li>코루틴을 시작한다. 시작할 수 있으면 <code>true</code>, 없으면 <code>false</code> 를 반환한다.</li>
+</ul>
+</li>
+<li><code>await()</code>
+<ul>
+<li>이미 <code>start()</code> 된 코루틴의 경우 실행된 값을 반환하고, <code>start()</code> 되기 전 코루틴이라면 실행 및 값을 반환한다.</li>
+</ul>
+</li>
+</ul>
+<br>
+<h2 id="async-style-functions"><a class="markdownIt-Anchor" href="#async-style-functions"></a> Async-style functions</h2>
+<p><strong>이렇게 사용하지 마라고 권고하는</strong> 내용의 예제이다. async-style의 함수는 exception이 발생했을 때 돌이킬 수 없는 상황에 봉착하게 된다. (exception이 발생되어도 코루틴이 죽지 않고 좀비로 남는 모습을 볼 수 있음.)</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// note that we don&#x27;t have `runBlocking` to the right of `main` in this example</span></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">val</span> time = measureTimeMillis &#123;</span><br><span class="line">        <span class="comment">// somethingUseful~ 함수는 suspend 함수가 아님(누구나 실행 가능)</span></span><br><span class="line">        <span class="keyword">val</span> one = somethingUsefulOneAsync()</span><br><span class="line">        <span class="keyword">val</span> two = somethingUsefulTwoAsync()</span><br><span class="line">        <span class="comment">// but waiting for a result must involve either suspending or blocking.</span></span><br><span class="line">        <span class="comment">// here we use `runBlocking &#123; ... &#125;` to block the main thread while waiting for the result</span></span><br><span class="line">        runBlocking &#123;</span><br><span class="line">            println(<span class="string">&quot;The answer is <span class="subst">$&#123;one.await() + two.await()&#125;</span>&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    println(<span class="string">&quot;Completed in <span class="variable">$time</span> ms&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">somethingUsefulOneAsync</span><span class="params">()</span></span> = GlobalScope.async &#123;</span><br><span class="line">    <span class="comment">// doSomethingUseful~ 함수는 suspend 함수임</span></span><br><span class="line">    doSomethingUsefulOne()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">somethingUsefulTwoAsync</span><span class="params">()</span></span> = GlobalScope.async &#123;</span><br><span class="line">    doSomethingUsefulTwo()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">doSomethingUsefulOne</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">    delay(<span class="number">1000L</span>) <span class="comment">// pretend we are doing something useful here</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">13</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">doSomethingUsefulTwo</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">    delay(<span class="number">1000L</span>) <span class="comment">// pretend we are doing something useful here, too</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">29</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>코루틴을 <mark><strong>아무 곳에서나 마구 사용할 수 있게 만든 위와 같은 코드는 절대적으로 지양해야 한다.</strong></mark></p>
+<br>
+<h2 id="structured-concurrency-with-async"><a class="markdownIt-Anchor" href="#structured-concurrency-with-async"></a> Structured concurrency with async</h2>
+<p>이전 예제에서 안 좋은 코드를 예로 들었다면, 이번 코드는 권장하는 스타일을 제안한다.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> = runBlocking&lt;<span class="built_in">Unit</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">val</span> time = measureTimeMillis &#123;</span><br><span class="line">        println(<span class="string">&quot;The answer is <span class="subst">$&#123;concurrentSum()&#125;</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    println(<span class="string">&quot;Completed in <span class="variable">$time</span> ms&quot;</span>)    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// coroutineScope로 감싸서 suspend function으로 바꿔주었다.</span></span><br><span class="line"><span class="comment">// suspend function은 아무 곳에서나 호출할 수 있는 형태가 아닌 코루틴 내에서만 사용 가능</span></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">concurrentSum</span><span class="params">()</span></span>: <span class="built_in">Int</span> = coroutineScope &#123;</span><br><span class="line">    <span class="keyword">val</span> one = async &#123; doSomethingUsefulOne() &#125;</span><br><span class="line">    <span class="keyword">val</span> two = async &#123; doSomethingUsefulTwo() &#125;</span><br><span class="line">    one.await() + two.await()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">doSomethingUsefulOne</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">    delay(<span class="number">1000L</span>) <span class="comment">// pretend we are doing something useful here</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">13</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">doSomethingUsefulTwo</span><span class="params">()</span></span>: <span class="built_in">Int</span> &#123;</span><br><span class="line">    delay(<span class="number">1000L</span>) <span class="comment">// pretend we are doing something useful here, too</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">29</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>위의 예제처럼 scope 안에서 suspending function들을 조립해서 사용해야 한다. <strong>exception이 발생할 경우 코루틴 블록 내부의 모든 코루틴이 취소되어 우리의 코드는 안전할 것임.</strong> 코루틴 좀비 해결!</p>
+<br>
+<h2 id="cancellation-propagated-coroutines-hierarchy"><a class="markdownIt-Anchor" href="#cancellation-propagated-coroutines-hierarchy"></a> Cancellation propagated coroutines hierarchy</h2>
+<p>아래 예제는 <code>async</code> 로 작성된 코루틴에서 exception이 발생할 경우 어떤 결과가 나타날지 시뮬레이션해 보는 코드이다.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">main</span><span class="params">()</span></span> = runBlocking&lt;<span class="built_in">Unit</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        failedConcurrentSum()</span><br><span class="line">    &#125; <span class="keyword">catch</span>(e: ArithmeticException) &#123;</span><br><span class="line">        println(<span class="string">&quot;Computation failed with ArithmeticException&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">suspend</span> <span class="function"><span class="keyword">fun</span> <span class="title">failedConcurrentSum</span><span class="params">()</span></span>: <span class="built_in">Int</span> = coroutineScope &#123;</span><br><span class="line">    <span class="keyword">val</span> one = async&lt;<span class="built_in">Int</span>&gt; &#123; </span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            delay(<span class="built_in">Long</span>.MAX_VALUE) <span class="comment">// Emulates very long computation</span></span><br><span class="line">            <span class="number">42</span></span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            println(<span class="string">&quot;First child was cancelled&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">val</span> two = async&lt;<span class="built_in">Int</span>&gt; &#123; </span><br><span class="line">        println(<span class="string">&quot;Second child throws an exception&quot;</span>)</span><br><span class="line">        <span class="keyword">throw</span> ArithmeticException()</span><br><span class="line">    &#125;</span><br><span class="line">    one.await() + two.await()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><mark><strong><code>asnyc</code> 로 실행된 코루틴 중 하나의 코루틴에서 exception이 발생할 경우, 이 exception은 다른 코루틴에게 영향을 주어 결국 모든 코루틴이 중단되게 한다.</strong></mark></p>
+<br>
+<h1 id="정리"><a class="markdownIt-Anchor" href="#정리"></a> 정리</h1>
+<ul>
+<li>일반 코드처럼 코틀린 코드를 작성할 경우 순서대로 동작한다.</li>
+<li>일반 비동기 코드처럼 동시에 실행하고 싶다면 코루틴 빌더인 <code>async</code> 를 이용하자.</li>
+<li>코루틴을 일반 함수로 감싸 아무 곳에서나 실행할 수 있는 미친 짓은 절대로 하지 말자. (exception 터질 때 감당 불가)</li>
+</ul>
+<br>
+<h1 id="참고-2"><a class="markdownIt-Anchor" href="#참고-2"></a> 참고</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://kotlinlang.org/docs/reference/coroutines/composing-suspending-functions.html">코루틴 공식 문서 - Composing Suspending Functions</a></li>
+<li><a target="_blank" rel="noopener" href="https://youtu.be/0viswXto028">새차원의 코틀린 코루틴 강좌 #4 - Composing Suspending Functions</a></li>
+</ul>
+<br>
+        </div>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사각형 광고 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9881428965884966"
+     data-ad-slot="1478713370"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://d2fault.github.io/2021/02/19/20210219-coroutine-composing-suspending-functions/" data-id="cklugedw200e0nf1u8nsx9aq7" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/d2fault" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/rss2.xml" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/02/21/20210221-coroutine-context-and-dispatchers/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            [Kotlin] 코루틴(Coroutine) Context and Dispatchers
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/01/18/20210114-coroutine-cancellation-and-timeouts/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">[Kotlin] 코루틴(Coroutine) Cancellation and Timeouts</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/12/31/20231231-diary/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_diary.png)" alt="[Diary] 2023년 회고하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Anything/">Anything</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Anything/Diary/">Diary</a></p>
+                            <p class="item-title"><a href="/2023/12/31/20231231-diary/" class="title">[Diary] 2023년 회고하기</a></p>
+                            <p class="item-date"><time datetime="2023-12-31T12:03:03.000Z" itemprop="datePublished">2023-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/05/07/20230507-android-design-module-development-story/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_android.png)" alt="[Android] 안드로이드 개발자의 디자인 시스템(모듈) 개발기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2023/05/07/20230507-android-design-module-development-story/" class="title">[Android] 안드로이드 개발자의 디자인 시스템(모듈) 개발기</a></p>
+                            <p class="item-date"><time datetime="2023-05-07T08:18:16.000Z" itemprop="datePublished">2023-05-07</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/12/31/20221231-diary/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_diary.png)" alt="[Diary] 2022년 회고하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Anything/">Anything</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Anything/Diary/">Diary</a></p>
+                            <p class="item-title"><a href="/2022/12/31/20221231-diary/" class="title">[Diary] 2022년 회고하기</a></p>
+                            <p class="item-date"><time datetime="2022-12-31T11:12:22.000Z" itemprop="datePublished">2022-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/12/25/20221225-2023-goodnote-diary-and-free-note-templates-for-free/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_post.png)" alt="[GoodNote] 2023 굿노트 다이어리, 프리노트 무료 배포" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blog/">Blog</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Blog/Information/">Information</a></p>
+                            <p class="item-title"><a href="/2022/12/25/20221225-2023-goodnote-diary-and-free-note-templates-for-free/" class="title">[GoodNote] 2023 굿노트 다이어리, 프리노트 무료 배포</a></p>
+                            <p class="item-date"><time datetime="2022-12-25T13:36:22.000Z" itemprop="datePublished">2022-12-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/07/21/20220721-android-contentobserver/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_android.png)" alt="[Android] ContentObserver 알아보기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2022/07/21/20220721-android-contentobserver/" class="title">[Android] ContentObserver 알아보기</a></p>
+                            <p class="item-date"><time datetime="2022-07-21T13:02:33.000Z" itemprop="datePublished">2022-07-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/">Anything</a><span class="category-list-count">55</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/Diary/">Diary</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/Review/">Review</a><span class="category-list-count">34</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/">Blog</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/Hexo/">Hexo</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/Information/">Information</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/">IT</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Blockchain/">Blockchain</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Linux/">Linux</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Others/">Others</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Android/">Android</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/C-C/">C/C++</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android/" style="font-size: 10.71px;">Android</a> <a href="/tags/CentOS/" style="font-size: 12.86px;">CentOS</a> <a href="/tags/Composer/" style="font-size: 13.57px;">Composer</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Ethereum/" style="font-size: 16.43px;">Ethereum</a> <a href="/tags/Fabric/" style="font-size: 12.86px;">Fabric</a> <a href="/tags/GO/" style="font-size: 10px;">GO</a> <a href="/tags/Hyperledger/" style="font-size: 18.57px;">Hyperledger</a> <a href="/tags/ICO/" style="font-size: 12.86px;">ICO</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Solidity/" style="font-size: 12.86px;">Solidity</a> <a href="/tags/Tip/" style="font-size: 14.29px;">Tip</a> <a href="/tags/Tutorial/" style="font-size: 15.71px;">Tutorial</a> <a href="/tags/adb/" style="font-size: 10px;">adb</a> <a href="/tags/android/" style="font-size: 16.43px;">android</a> <a href="/tags/architect/" style="font-size: 10px;">architect</a> <a href="/tags/audiofocus/" style="font-size: 10.71px;">audiofocus</a> <a href="/tags/autoconf/" style="font-size: 10px;">autoconf</a> <a href="/tags/automake/" style="font-size: 10px;">automake</a> <a href="/tags/bitmask/" style="font-size: 10px;">bitmask</a> <a href="/tags/branch/" style="font-size: 10px;">branch</a> <a href="/tags/clean-code/" style="font-size: 10px;">clean code</a> <a href="/tags/consolidate/" style="font-size: 10px;">consolidate</a> <a href="/tags/contentobserver/" style="font-size: 10px;">contentobserver</a> <a href="/tags/contentprovider/" style="font-size: 10px;">contentprovider</a> <a href="/tags/context/" style="font-size: 10px;">context</a> <a href="/tags/coroutine/" style="font-size: 12.14px;">coroutine</a> <a href="/tags/customdialog/" style="font-size: 10px;">customdialog</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/deview/" style="font-size: 10px;">deview</a> <a href="/tags/dispatchers/" style="font-size: 10px;">dispatchers</a> <a href="/tags/ejs/" style="font-size: 10px;">ejs</a> <a href="/tags/enumset/" style="font-size: 10px;">enumset</a> <a href="/tags/exel/" style="font-size: 10px;">exel</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fullscreen/" style="font-size: 10px;">fullscreen</a> <a href="/tags/geth/" style="font-size: 10px;">geth</a> <a href="/tags/git/" style="font-size: 11.43px;">git</a> <a href="/tags/goodnote/" style="font-size: 10px;">goodnote</a> <a href="/tags/java/" style="font-size: 11.43px;">java</a> <a href="/tags/kotlin/" style="font-size: 14.29px;">kotlin</a> <a href="/tags/m4/" style="font-size: 10px;">m4</a> <a href="/tags/module/" style="font-size: 10px;">module</a> <a href="/tags/mustache/" style="font-size: 10px;">mustache</a> <a href="/tags/node-js/" style="font-size: 11.43px;">node.js</a> <a href="/tags/powerpoint/" style="font-size: 10px;">powerpoint</a> <a href="/tags/ppt/" style="font-size: 10px;">ppt</a> <a href="/tags/process/" style="font-size: 10px;">process</a> <a href="/tags/redis/" style="font-size: 10.71px;">redis</a> <a href="/tags/refactoring/" style="font-size: 10px;">refactoring</a> <a href="/tags/research/" style="font-size: 10px;">research</a> <a href="/tags/sdk/" style="font-size: 10px;">sdk</a> <a href="/tags/sentinel/" style="font-size: 10.71px;">sentinel</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/task/" style="font-size: 10px;">task</a> <a href="/tags/tip/" style="font-size: 10.71px;">tip</a> <a href="/tags/token-economy/" style="font-size: 10.71px;">token economy</a> <a href="/tags/webview/" style="font-size: 10.71px;">webview</a> <a href="/tags/%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD/" style="font-size: 15px;">개발환경</a> <a href="/tags/%EA%B5%BF%EB%85%B8%ED%8A%B8/" style="font-size: 10px;">굿노트</a> <a href="/tags/%EB%82%98%EB%85%B8%ED%94%84%EB%A0%88%EC%86%8C/" style="font-size: 10px;">나노프레소</a> <a href="/tags/%EB%A6%AC%EB%B7%B0/" style="font-size: 20px;">리뷰</a> <a href="/tags/%EB%A7%A4%EC%8B%9C%EC%97%85/" style="font-size: 10px;">매시업</a> <a href="/tags/%EB%AA%85%EB%A0%B9%EC%96%B4/" style="font-size: 10px;">명령어</a> <a href="/tags/%EB%AC%B8%EB%B2%95/" style="font-size: 17.14px;">문법</a> <a href="/tags/%EB%B3%B5%EA%B5%AC/" style="font-size: 10px;">복구</a> <a href="/tags/%EB%B3%B5%EC%8B%B1/" style="font-size: 10.71px;">복싱</a> <a href="/tags/%EB%B8%94%EB%A3%A8%ED%88%AC%EC%8A%A4%EC%9D%B4%EC%96%B4%ED%8F%B0/" style="font-size: 10.71px;">블루투스이어폰</a> <a href="/tags/%EB%B9%84%ED%88%AC%EB%B9%84/" style="font-size: 11.43px;">비투비</a> <a href="/tags/%EB%B9%85%EC%8A%A4%EB%B9%84/" style="font-size: 10px;">빅스비</a> <a href="/tags/%EC%83%9D%EA%B0%81/" style="font-size: 10px;">생각</a> <a href="/tags/%EC%84%A4%EC%B9%98/" style="font-size: 17.14px;">설치</a> <a href="/tags/%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85/" style="font-size: 10px;">스타트업</a> <a href="/tags/%EC%8B%9C%EB%A6%AC/" style="font-size: 10px;">시리</a> <a href="/tags/%EC%97%A0%EC%A7%80%ED%85%8D/" style="font-size: 10.71px;">엠지텍</a> <a href="/tags/%EC%98%81%ED%99%94/" style="font-size: 19.29px;">영화</a> <a href="/tags/%EC%9D%B8%EC%BD%94%EB%94%A9/" style="font-size: 10px;">인코딩</a> <a href="/tags/%EC%9D%BC%EC%83%81/" style="font-size: 17.86px;">일상</a> <a href="/tags/%EC%9E%90%EA%B2%A9-%EC%A6%9D%EB%AA%85/" style="font-size: 10px;">자격 증명</a> <a href="/tags/%EC%A7%80%EC%A0%81%EC%9E%AC%EC%82%B0%EA%B6%8C/" style="font-size: 10px;">지적재산권</a> <a href="/tags/%EC%B1%85/" style="font-size: 10.71px;">책</a> <a href="/tags/%EC%BB%A4%ED%94%BC/" style="font-size: 10px;">커피</a> <a href="/tags/%EC%BD%94%EC%9D%B8/" style="font-size: 11.43px;">코인</a> <a href="/tags/%EC%BD%94%ED%8B%80%EB%A6%B0/" style="font-size: 10px;">코틀린</a> <a href="/tags/%EC%BD%98%EC%84%9C%ED%8A%B8/" style="font-size: 11.43px;">콘서트</a> <a href="/tags/%ED%85%9C%ED%94%8C%EB%A6%BF/" style="font-size: 10px;">템플릿</a> <a href="/tags/%ED%86%A0%ED%81%B0%EC%9D%B4%EC%BD%94%EB%85%B8%EB%AF%B8/" style="font-size: 10.71px;">토큰이코노미</a> <a href="/tags/%ED%8A%B9%ED%97%88/" style="font-size: 10px;">특허</a> <a href="/tags/%ED%8C%8C%EC%9D%BC%EC%9E%85%EC%B6%9C%EB%A0%A5/" style="font-size: 10px;">파일입출력</a> <a href="/tags/%ED%95%80%ED%85%8C%ED%81%AC/" style="font-size: 10px;">핀테크</a> <a href="/tags/%ED%95%B4%EC%BB%A4%ED%86%A4/" style="font-size: 10px;">해커톤</a> <a href="/tags/%ED%9A%8C%EA%B3%A0/" style="font-size: 14.29px;">회고</a> <a href="/tags/%ED%9B%84%EA%B8%B0/" style="font-size: 10.71px;">후기</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://blog.nullptr.kr">vee&#39;s Blog</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+                <div class="widget-wrap widget-float">
+    
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- huemen sidebar -->
+        <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-9881428965884966"
+                data-ad-slot="9267898354"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    
+    </div>
+            
+        
+    </div>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사각형 광고 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9881428965884966"
+     data-ad-slot="1478713370"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2024 Jiyoung(d2fault)</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'd2fault';
+    
+    
+    var disqus_url = 'https://d2fault.github.io/2021/02/19/20210219-coroutine-composing-suspending-functions/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+      <script data-ad-client="ca-pub-9881428965884966" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

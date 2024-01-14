@@ -1,0 +1,1116 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="sitemap.xsl"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <url>
+        <loc>https://d2fault.github.io/</loc>
+        <changefreq>daily</changefreq>
+        <priority>1</priority>
+    </url>
+
+
+    <url>
+        <loc>https://d2fault.github.io/2023/12/31/20231231-diary/</loc>
+        <lastmod>2024-01-14T05:44:24.035Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2023/05/07/20230507-android-design-module-development-story/</loc>
+        <lastmod>2024-01-03T14:01:13.949Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2022/12/31/20221231-diary/</loc>
+        <lastmod>2024-01-03T14:01:13.948Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2022/07/21/20220721-android-contentobserver/</loc>
+        <lastmod>2024-01-03T14:01:13.946Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2022/12/25/20221225-2023-goodnote-diary-and-free-note-templates-for-free/</loc>
+        <lastmod>2024-01-03T14:01:13.946Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2022/04/03/20220403-android-process-vs-task/</loc>
+        <lastmod>2024-01-03T14:01:13.941Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2022/02/20/20220220-book-review-this-is-android-with-kotlin/</loc>
+        <lastmod>2024-01-03T14:01:13.929Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2021/12/31/20211231-diary/</loc>
+        <lastmod>2024-01-03T14:01:13.928Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2021/10/31/20211031-how-to-architect-android-sdk/</loc>
+        <lastmod>2024-01-03T14:01:13.917Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2021/08/29/20210829-fullscreen-custom-dialog/</loc>
+        <lastmod>2024-01-03T14:01:13.914Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2021/07/26/20210726-android-audio-focus-2/</loc>
+        <lastmod>2024-01-03T14:01:13.913Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2021/07/19/20210710-android-audio-focus-1/</loc>
+        <lastmod>2024-01-03T14:01:13.912Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2021/07/06/20210706-java-bitmask-and-enumset/</loc>
+        <lastmod>2024-01-03T14:01:13.911Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2021/05/09/20210509-book-review-so-good-they-cant-ignore-you/</loc>
+        <lastmod>2024-01-03T14:01:13.907Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2021/03/01/20210301-diary/</loc>
+        <lastmod>2024-01-03T14:01:13.893Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2021/02/21/20210221-coroutine-context-and-dispatchers/</loc>
+        <lastmod>2024-01-03T14:01:13.888Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2021/02/19/20210219-coroutine-composing-suspending-functions/</loc>
+        <lastmod>2024-01-03T14:01:13.886Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2021/01/18/20210114-coroutine-cancellation-and-timeouts/</loc>
+        <lastmod>2024-01-03T14:01:13.885Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2021/01/13/20210113-coroutine-basic/</loc>
+        <lastmod>2024-01-03T14:01:13.883Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2020/12/31/20201231-diary/</loc>
+        <lastmod>2024-01-03T14:01:13.866Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2020/01/03/20200103-develop-android-with-kotlin-1/</loc>
+        <lastmod>2024-01-03T14:01:13.864Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2020/04/18/20200418-adb-connect-without-usb/</loc>
+        <lastmod>2021-03-04T05:31:57.826Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2020/05/31/20200531-movie-la-belle-epoque/</loc>
+        <lastmod>2021-03-04T05:31:57.826Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2020/03/23/20200323-solving-r-error/</loc>
+        <lastmod>2021-03-04T05:31:57.791Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2020/01/15/20200115-resolve-authentication-failure-on-git-clone/</loc>
+        <lastmod>2021-03-04T05:31:57.765Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2019/12/31/20191231-diary/</loc>
+        <lastmod>2021-03-04T05:31:57.613Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2019/09/05/20190905-clean-code/</loc>
+        <lastmod>2021-03-04T05:31:56.265Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2019/11/01/20191101-review-deview-2019/</loc>
+        <lastmod>2021-03-04T05:31:56.265Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2019/06/18/20190618-movie-review-aladdin/</loc>
+        <lastmod>2021-03-04T05:31:56.264Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2019/05/10/20190510-movie-review-avengers-endgame/</loc>
+        <lastmod>2021-03-04T05:31:56.258Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2019/04/27/20190427-movie-review-extreme-job/</loc>
+        <lastmod>2021-03-04T05:31:56.225Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2019/04/20/20190420-movie-review-the-odd-family-zombie-on-sale/</loc>
+        <lastmod>2021-03-04T05:31:56.223Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2019/04/14/20190414-movie-review-another-child/</loc>
+        <lastmod>2021-03-04T05:31:56.221Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2019/02/23/20190223-movie-review-svaha-the-sixth-finger/</loc>
+        <lastmod>2021-03-04T05:31:56.213Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2019/02/23/20190216-movie-review-innocent-witness/</loc>
+        <lastmod>2021-03-04T05:31:56.208Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2019/01/25/20190125-set-and-check-sentinel/</loc>
+        <lastmod>2021-03-04T05:31:56.207Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2019/02/05/20190205-movie-review-hit-and-run-squad/</loc>
+        <lastmod>2021-03-04T05:31:56.207Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/12/31/20181231-diary/</loc>
+        <lastmod>2021-03-04T05:31:56.206Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2019/01/24/20190124-install-redis-and-set-master-slave-relationship/</loc>
+        <lastmod>2021-03-04T05:31:56.206Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/12/18/20181218-diary/</loc>
+        <lastmod>2021-03-04T05:31:56.205Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/12/26/20181226-nodejs-html-load-with-express/</loc>
+        <lastmod>2021-03-04T05:31:56.205Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/12/08/20181208-movie-review-default/</loc>
+        <lastmod>2021-03-04T05:31:56.204Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/12/05/20181205-android-studio-too-long-log-tags/</loc>
+        <lastmod>2021-03-04T05:31:56.199Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/11/19/20181119-diary/</loc>
+        <lastmod>2021-03-04T05:31:56.198Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/12/04/20181204-android-studio-could-not-find-gradle/</loc>
+        <lastmod>2021-03-04T05:31:56.198Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/11/10/20181110-review-bluetooth-earphone-mb-w2000-mgtec/</loc>
+        <lastmod>2021-03-04T05:31:56.193Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/11/06/20181106-token-economy-pattern-1-means-of-exchange/</loc>
+        <lastmod>2021-03-04T05:31:56.192Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/11/09/20181107-token-economy-pattern-2-means-of-staking/</loc>
+        <lastmod>2021-03-04T05:31:56.192Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/10/17/20181017-bixby-vs-siri/</loc>
+        <lastmod>2021-03-04T05:31:56.191Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/10/02/20181002-movie-review-the-negotiation/</loc>
+        <lastmod>2021-03-04T05:31:56.144Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/09/26/20180926-movie-review-the-soul-mate/</loc>
+        <lastmod>2021-03-04T05:31:56.136Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/09/20/20180920-movie-review-fengshui/</loc>
+        <lastmod>2021-03-04T05:31:56.127Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/09/22/20180922-movie-review-the-nun/</loc>
+        <lastmod>2021-03-04T05:31:56.127Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/09/04/20180904-hyperledger-fabric-basic-network-and-ibm-marbles/</loc>
+        <lastmod>2021-03-04T05:31:56.126Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/08/31/20180831-movie-review-searching/</loc>
+        <lastmod>2021-03-04T05:31:56.114Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/08/21/20180821-writing-powerpoint-strategically/</loc>
+        <lastmod>2021-03-04T05:31:56.113Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/08/28/20180828-movie-review-on-your-wedding-day/</loc>
+        <lastmod>2021-03-04T05:31:56.113Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/08/20/20180820-exel-function-summary/</loc>
+        <lastmod>2021-03-04T05:31:56.112Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/08/08/20180808-movie-review-the-spy-gone-north/</loc>
+        <lastmod>2021-03-04T05:31:56.098Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/08/09/20180809-movie-review-along-with-the-gods-the-last-49-days/</loc>
+        <lastmod>2021-03-04T05:31:56.098Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/08/08/20180808-diary/</loc>
+        <lastmod>2021-03-04T05:31:56.093Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/08/06/20180806-setting-fabric-developement-environment-centos/</loc>
+        <lastmod>2021-03-04T05:31:56.092Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/08/03/20180803-install-postman-centos/</loc>
+        <lastmod>2021-03-04T05:31:56.091Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/08/03/20180803-install-chrome-and-vscode-centos/</loc>
+        <lastmod>2021-03-04T05:31:56.084Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/08/02/20180802-install-vncserver-centos/</loc>
+        <lastmod>2021-03-04T05:31:56.011Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/08/02/20180802-install-gnu-automake-centos/</loc>
+        <lastmod>2021-03-04T05:31:56.009Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/08/01/20180801-using-ssh/</loc>
+        <lastmod>2021-03-04T05:31:56.006Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/07/30/20180730-movie-review-an-ethics-lesson/</loc>
+        <lastmod>2021-03-04T05:31:55.993Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/07/28/20180728-movie-review-take-me-to-the-moon/</loc>
+        <lastmod>2021-03-04T05:31:55.991Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/07/25/20180725-hyperledger-composer-transaction-processor-function-2/</loc>
+        <lastmod>2021-03-04T05:31:55.990Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/07/24/20180724-hyperledger-composer-transaction-processor-function-1/</loc>
+        <lastmod>2021-03-04T05:31:55.981Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/07/24/20180724-movie-review-gonjiam-haunted-asylum/</loc>
+        <lastmod>2021-03-04T05:31:55.981Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/07/23/20180723-hyperledger-composer-access-control-language/</loc>
+        <lastmod>2021-03-04T05:31:55.980Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/07/18/20180718-hyperledger-composer-modeling-language/</loc>
+        <lastmod>2021-03-04T05:31:55.978Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/07/22/20180722-movie-review-be-with-you/</loc>
+        <lastmod>2021-03-04T05:31:55.978Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/07/09/20180709-android-studio-remove-version-control/</loc>
+        <lastmod>2021-03-04T05:31:55.959Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/07/11/20180711-install-jdk-at-windows10/</loc>
+        <lastmod>2021-03-04T05:31:55.959Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/07/03/20180703-smart-posting/</loc>
+        <lastmod>2021-03-04T05:31:55.955Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/06/14/20180614-diary/</loc>
+        <lastmod>2021-03-04T05:31:55.949Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/06/18/20180618-nodejs-encoding/</loc>
+        <lastmod>2021-03-04T05:31:55.949Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/06/21/20180621-diary/</loc>
+        <lastmod>2021-03-04T05:31:55.949Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/06/28/20180628-diary/</loc>
+        <lastmod>2021-03-04T05:31:55.949Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/05/16/20180516-hyperledger-fabric-tutorial-2/</loc>
+        <lastmod>2021-03-04T05:31:55.948Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/06/12/20180612-git-basic/</loc>
+        <lastmod>2021-03-04T05:31:55.948Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/06/15/20180615-recover-git-branch-and-commit/</loc>
+        <lastmod>2021-03-04T05:31:55.948Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/05/18/20180518-hyperledger-fabric-tutorial-3/</loc>
+        <lastmod>2021-03-04T05:31:55.947Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/06/08/20180608-diary/</loc>
+        <lastmod>2021-03-04T05:31:55.947Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/05/10/20180510-blockchain-ico-case/</loc>
+        <lastmod>2021-03-04T05:31:55.945Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/05/15/20180515-hyperledger-fabric-tutorial-1/</loc>
+        <lastmod>2021-03-04T05:31:55.945Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/04/30/20180430-install-and-upgrade-nodejs-or-npm/</loc>
+        <lastmod>2021-03-04T05:31:55.938Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/04/30/20180430-setting-hyperledger-developement-environment/</loc>
+        <lastmod>2021-03-04T05:31:55.938Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/05/02/20180502-hyperledger-composer-tutorial/</loc>
+        <lastmod>2021-03-04T05:31:55.938Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/05/08/20180508-hyperledger-composer-query-tutorial/</loc>
+        <lastmod>2021-03-04T05:31:55.938Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/04/18/20180418-patent-and-intellectual-property-right/</loc>
+        <lastmod>2021-03-04T05:31:55.937Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/04/10/20180410-develop-dapp/</loc>
+        <lastmod>2021-03-04T05:31:55.921Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/04/10/20180410-linux-basic/</loc>
+        <lastmod>2021-03-04T05:31:55.921Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/04/17/20180417-nanopresso-review/</loc>
+        <lastmod>2021-03-04T05:31:55.921Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/03/20/20180320-about-solidity-3/</loc>
+        <lastmod>2021-03-04T05:31:55.920Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/03/20/20180320-about-solidity-4/</loc>
+        <lastmod>2021-03-04T05:31:55.920Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/03/19/20180319-about-solidity-1/</loc>
+        <lastmod>2021-03-04T05:31:55.919Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/03/19/20180319-about-solidity-2/</loc>
+        <lastmod>2021-03-04T05:31:55.919Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/03/16/20180316-about-ethereum-1/</loc>
+        <lastmod>2021-03-04T05:31:55.918Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/03/16/20180316-about-ethereum-2/</loc>
+        <lastmod>2021-03-04T05:31:55.918Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/03/15/20180315-preparation-for-blockchain-practice/</loc>
+        <lastmod>2021-03-04T05:31:55.917Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/03/08/20180308-fintech-foregin-exchange-transactions-by-blockchain/</loc>
+        <lastmod>2021-03-04T05:31:55.915Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/03/09/20180309-preparation-for-blockchain-practice/</loc>
+        <lastmod>2021-03-04T05:31:55.915Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/03/13/20180313-preparation-for-blockchain-practice/</loc>
+        <lastmod>2021-03-04T05:31:55.915Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/03/05/20180305-javascript-oprator/</loc>
+        <lastmod>2021-03-04T05:31:55.914Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/03/05/20180305-javascript-string-literal/</loc>
+        <lastmod>2021-03-04T05:31:55.914Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/03/06/20180306-diary/</loc>
+        <lastmod>2021-03-04T05:31:55.914Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/03/06/20180306-javascript-statements/</loc>
+        <lastmod>2021-03-04T05:31:55.914Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/02/28/20180228-javascript-number-type/</loc>
+        <lastmod>2021-03-04T05:31:55.913Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/03/05/20180305-diary/</loc>
+        <lastmod>2021-03-04T05:31:55.913Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/02/27/20180227-start-javascript/</loc>
+        <lastmod>2021-03-04T05:31:55.912Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/02/28/20180228-javascript-data-type/</loc>
+        <lastmod>2021-03-04T05:31:55.912Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/02/26/20180226-diary/</loc>
+        <lastmod>2021-03-04T05:31:55.911Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/02/27/20180227-javascript-basic-gramma/</loc>
+        <lastmod>2021-03-04T05:31:55.911Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/02/27/20180227-javascript-in-html/</loc>
+        <lastmod>2021-03-04T05:31:55.911Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/02/27/20180227-javascript-variable/</loc>
+        <lastmod>2021-03-04T05:31:55.911Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/02/14/20180214-hexo-write-draft/</loc>
+        <lastmod>2021-03-04T05:31:55.910Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/02/20/20180220-hexo-essential-plugin/</loc>
+        <lastmod>2021-03-04T05:31:55.910Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/02/21/20180221-hexo-change-font-hueman-theme-version/</loc>
+        <lastmod>2021-03-04T05:31:55.910Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/02/19/20180219-diary/</loc>
+        <lastmod>2021-03-04T05:31:55.909Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/02/20/20180220-blockchain-ico-case/</loc>
+        <lastmod>2021-03-04T05:31:55.906Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/02/19/20180219-hexo-publish-post/</loc>
+        <lastmod>2021-03-04T05:31:55.904Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/02/09/20180209-blockchain-ico-case/</loc>
+        <lastmod>2021-03-04T05:31:55.903Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/01/26/20180126-blockchain-ico-case/</loc>
+        <lastmod>2021-03-04T05:31:55.902Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2018/02/02/20180202-blockchain-ico-case/</loc>
+        <lastmod>2021-03-04T05:31:55.901Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2017/08/17/20170817-hexo-create-blog/</loc>
+        <lastmod>2021-03-04T05:31:55.899Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2017/08/06/20170806-diary/</loc>
+        <lastmod>2021-03-04T05:31:55.898Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2017/08/03/20170803-diary/</loc>
+        <lastmod>2021-03-04T05:31:55.897Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2017/08/03/20170803-hexo-preparing-to-start/</loc>
+        <lastmod>2021-03-04T05:31:55.897Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2017/11/24/20171124-hexo-apply-theme/</loc>
+        <lastmod>2021-03-04T05:31:55.897Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2016/10/10/20161010-c-fileio/</loc>
+        <lastmod>2021-03-04T05:31:55.896Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2016/08/23/20160823-review-bluetooth-earphone-mb-e80-mgtec/</loc>
+        <lastmod>2021-03-04T05:31:55.892Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2012/12/17/20121217-movie-review-the-taste-of-money/</loc>
+        <lastmod>2021-03-04T05:31:55.886Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2012/12/17/20121217-movie-review-if-only/</loc>
+        <lastmod>2021-03-04T05:31:55.885Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://d2fault.github.io/2012/12/15/20121215-movie-review-love-me-not/</loc>
+        <lastmod>2021-03-04T05:31:55.884Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+</urlset>
+<!-- XML Sitemap generated by Hexo SEO Friendly Sitemap Generator -->

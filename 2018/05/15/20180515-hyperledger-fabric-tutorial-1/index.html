@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>[Hyperledger] Fabric 튜토리얼(1) - First Network 실행하기 | 잡동사니 수집광</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="Hyperledger,Tutorial,Fabric" />
+    
+    <meta name="description" content="Hyperledger Fabric 튜토리얼(1) - First Network 실행하기 공식 사이트를 참고로 진행할 시리즈. 기껏 Composer 실습 끝냈더니 Fabric이 남아 있었다. 백날 공식 사이트 살피면 뭐 하나~ 한 번에 되는 실습 하나 없는데! 복잡하고 문제가 많아 분명 또 잊을 게 분명하니까 잘 적어 둬야지. 오늘 오전 시간은 이 포스팅으로">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Hyperledger] Fabric 튜토리얼(1) - First Network 실행하기">
+<meta property="og:url" content="https://d2fault.github.io/2018/05/15/20180515-hyperledger-fabric-tutorial-1/index.html">
+<meta property="og:site_name" content="잡동사니 수집광">
+<meta property="og:description" content="Hyperledger Fabric 튜토리얼(1) - First Network 실행하기 공식 사이트를 참고로 진행할 시리즈. 기껏 Composer 실습 끝냈더니 Fabric이 남아 있었다. 백날 공식 사이트 살피면 뭐 하나~ 한 번에 되는 실습 하나 없는데! 복잡하고 문제가 많아 분명 또 잊을 게 분명하니까 잘 적어 둬야지. 오늘 오전 시간은 이 포스팅으로">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://d2fault.github.io/images/thumbnail/thumb_blockchain.png">
+<meta property="article:published_time" content="2018-05-15T01:44:51.000Z">
+<meta property="article:modified_time" content="2021-03-04T05:31:55.945Z">
+<meta property="article:author" content="Jiyoung(d2fault)">
+<meta property="article:tag" content="Hyperledger">
+<meta property="article:tag" content="Tutorial">
+<meta property="article:tag" content="Fabric">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://d2fault.github.io/images/thumbnail/thumb_blockchain.png">
+    
+    <link rel="canonical" href="https://d2fault.github.io/2018/05/15/20180515-hyperledger-fabric-tutorial-1/"/>
+    
+        <link rel="alternate" href="/rss2.xml" title="잡동사니 수집광" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/favicon_d2fault.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" type="text/css" href="">
+    
+<link rel="stylesheet" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css">
+
+    
+<link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3QNGCBD959"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3QNGCBD959');
+</script>
+<!-- End Google Analytics -->
+
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Anything/">Anything</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Anything/Diary/">Diary</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Anything/Review/">Review</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Blog/">Blog</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Blog/Hexo/">Hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Blog/Information/">Information</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/IT/">IT</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/IT/Blockchain/">Blockchain</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/IT/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/IT/Others/">Others</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Android/">Android</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/C-C/">C/C++</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/JavaScript/">JavaScript</a></li></ul></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/IT/">IT</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/IT/Blockchain/">Blockchain</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-20180515-hyperledger-fabric-tutorial-1" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        [Hyperledger] Fabric 튜토리얼(1) - First Network 실행하기
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2018/05/15/20180515-hyperledger-fabric-tutorial-1/" class="article-date">
+       <time datetime="2018-05-15T01:44:51.000Z" itemprop="datePublished">2018-05-15</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2018/05/15/20180515-hyperledger-fabric-tutorial-1/" class="article-date">
+     <time datetime="2021-03-04T05:31:55.945Z" itemprop="dateModified">2021-03-04</time>
+  </a>
+</div>
+
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Fabric/" rel="tag">Fabric</a>, <a class="tag-link-link" href="/tags/Hyperledger/" rel="tag">Hyperledger</a>, <a class="tag-link-link" href="/tags/Tutorial/" rel="tag">Tutorial</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 수평형 광고 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9881428965884966"
+     data-ad-slot="2468361412"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            <h1 id="hyperledger-fabric-튜토리얼1-first-network-실행하기"><a class="markdownIt-Anchor" href="#hyperledger-fabric-튜토리얼1-first-network-실행하기"></a> Hyperledger Fabric 튜토리얼(1) - First Network 실행하기</h1>
+<p><a target="_blank" rel="noopener" href="http://hyperledger-fabric.readthedocs.io/en/release-1.1/tutorials.html">공식 사이트</a>를 참고로 진행할 시리즈. 기껏 Composer 실습 끝냈더니 Fabric이 남아 있었다. 백날 공식 사이트 살피면 뭐 하나~ 한 번에 되는 실습 하나 없는데! 복잡하고 문제가 많아 분명 또 잊을 게 분명하니까 잘 적어 둬야지. <s>오늘 오전 시간은 이 포스팅으로 마무리해 보자! (1시간도 안 남음)</s></p>
+<p><code>sudo</code>를 광적으로 붙이는 경향이 있다. 빼도 되는 명령이 몇 가지 있긴 한데, 괜한 삽질하기 싫어서 웬만하면 다 붙인다. 특히 <code>docker</code> 명령을 실행할 때에는 무조건 붙여야 한다. <s><code>sudo</code> 빼고 실행할 수 있도록 설치 과정에서 설정해 주었는데 외않돼지? -_-</s></p>
+<br>
+<h2 id="0-필수-구성-요소-설치-확인"><a class="markdownIt-Anchor" href="#0-필수-구성-요소-설치-확인"></a> 0. 필수 구성 요소 설치 확인</h2>
+<p>필수 구성 요소는 <a target="_blank" rel="noopener" href="http://hyperledger-fabric.readthedocs.io/en/release-1.1/prereqs.html">이 링크</a>에서 확인하면 된다. 설치 과정은 이전 시리즈에 정리해 두었다. 누락된 것이 있다면 이전 시리즈 참고해 주세요.</p>
+<p><a href="https://d2fault.github.io/2018/03/09/20180309-preparation-for-blockchain-practice/">- curl, git, go 설치하기</a><br />
+<a href="https://d2fault.github.io/2018/03/15/20180315-preparation-for-blockchain-practice/">- docker, docker-compose 설치하기</a></p>
+<br>
+<h2 id="1-hyperledger-fabric-sample-code-다운로드"><a class="markdownIt-Anchor" href="#1-hyperledger-fabric-sample-code-다운로드"></a> 1. Hyperledger Fabric Sample Code 다운로드</h2>
+<p>오늘은 Fabric Sample 중 first-network를 실습해 볼 예정이다. 먼저 샘플 코드를 받아 보자. 샘플 코드는 원하는 디렉토리에 받으면 되는데, 나는 <strong>홈 디렉토리에서 다음의 명령어를 실행했다.</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fabric-samples 다운로드</span></span><br><span class="line">git <span class="built_in">clone</span> -b master https://github.com/hyperledger/fabric-samples.git</span><br><span class="line"><span class="comment"># fabric-samples로 directory 이동</span></span><br><span class="line"><span class="built_in">cd</span> fabric-samples</span><br></pre></td></tr></table></figure>
+<p>다음으로 바이너리 파일을 다운한다.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -sSL https://goo.gl/6wtTN5 | bash -s 1.1.0</span><br></pre></td></tr></table></figure>
+<p>여기까지 다운로드는 끝!</p>
+<br>
+<h2 id="2-어떻게-실행하지"><a class="markdownIt-Anchor" href="#2-어떻게-실행하지"></a> 2. 어떻게 실행하지?</h2>
+<p><code>fabric-samples/first-network</code> 디렉토리에 접근하면 <code>byfn.sh</code> 파일이 있을 것이다. <code>sudo ./byfn.sh --help</code> 명령을 실행해 보자. 다음과 같은 설명이 출력될 것!</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Usage:</span><br><span class="line">byfn.sh up|down|restart|generate [-c &lt;channel name&gt;] [-t &lt;timeout&gt;] [-d &lt;delay&gt;] [-f &lt;docker-compose-file&gt;] [-s &lt;dbtype&gt;]</span><br><span class="line">byfn.sh -h|--help (print this message)</span><br><span class="line">  -m &lt;mode&gt; - one of &#x27;up&#x27;, &#x27;down&#x27;, &#x27;restart&#x27; or &#x27;generate&#x27;</span><br><span class="line">    - &#x27;up&#x27; - bring up the network with docker-compose up</span><br><span class="line">    - &#x27;down&#x27; - clear the network with docker-compose down</span><br><span class="line">    - &#x27;restart&#x27; - restart the network</span><br><span class="line">    - &#x27;generate&#x27; - generate required certificates and genesis block</span><br><span class="line">  -c &lt;channel name&gt; - channel name to use (defaults to &quot;mychannel&quot;)</span><br><span class="line">  -t &lt;timeout&gt; - CLI timeout duration in seconds (defaults to 10)</span><br><span class="line">  -d &lt;delay&gt; - delay duration in seconds (defaults to 3)</span><br><span class="line">  -f &lt;docker-compose-file&gt; - specify which docker-compose file use (defaults to docker-compose-cli.yaml)</span><br><span class="line">  -s &lt;dbtype&gt; - the database backend to use: goleveldb (default) or couchdb</span><br><span class="line">  -l &lt;language&gt; - the chaincode language: golang (default) or node</span><br><span class="line">  -a - don&#x27;t ask for confirmation before proceeding</span><br><span class="line"></span><br><span class="line">  Typically, one would first generate the required certificates and</span><br><span class="line">  genesis block, then bring up the network. e.g.:</span><br><span class="line"></span><br><span class="line">      byfn.sh -m generate -c mychannel</span><br><span class="line">      byfn.sh -m up -c mychannel -s couchdb</span><br></pre></td></tr></table></figure>
+<p>요까지는 아마 순조롭게 실행됐을 것이다.</p>
+<br>
+<h2 id="3-네트워크-생성"><a class="markdownIt-Anchor" href="#3-네트워크-생성"></a> 3. 네트워크 생성</h2>
+<p>네트워크 생성은 간단히 해결된다. 다음의 명령을 실행하시오.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./byfn.sh -m generate</span><br></pre></td></tr></table></figure>
+<p>만약 <code>cryptogen tool not found. exiting</code> 에러를 뿜는다면 쉽게 해결할 수 있다. Fabric Sample 코드만 다운하고 바이너리 파일을 다운하지 않았기 때문에 생기는 문제. 스크롤 위로 올려서 <code>sudo curl -sSL https://goo.gl/6wtTN5 | bash -s 1.1.0</code> 명령 실행해 주세요. ^^</p>
+<br>
+<h2 id="4-네트워크-구축"><a class="markdownIt-Anchor" href="#4-네트워크-구축"></a> 4. 네트워크 구축</h2>
+<p>자, 지금부터 시작이다. 일단 명령어는 간단하다. 다음의 명령을 실행해 보시지요. 튜토리얼에서는 이 순서로 하라고 함.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./byfn.sh -m up</span><br></pre></td></tr></table></figure>
+<p>아마 바로 실행되지 않을걸? 😦 정말 불친절!</p>
+<h3 id="error-manifest-for-hyperledgerfabric-ordererlatest-not-found"><a class="markdownIt-Anchor" href="#error-manifest-for-hyperledgerfabric-ordererlatest-not-found"></a> ERROR: manifest for hyperledger/fabric-orderer:latest not found</h3>
+<p>docker에서 pull을 해 줘야 한다. <mark><strong>fabric-orderer가 최신 버전이 아니거나, 태그가 달라서 생기는 문제인 듯하다.</strong></mark> 다음의 명령어를 실행하자.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> fabric-tools 최신 버전으로 pull</span></span><br><span class="line">sudo docker pull hyperledger/fabric-orderer:x86_64-1.1.0-rc1</span><br><span class="line"><span class="meta">#</span><span class="bash"> tag 수정</span></span><br><span class="line">sudo docker tag hyperledger/fabric-orderer:x86_64-1.1.0-rc1 hyperledger/fabric-tools:latest</span><br></pre></td></tr></table></figure>
+<p>아래의 명령을 실행하자.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./byfn.sh -m up</span><br></pre></td></tr></table></figure>
+<p>아마 여전히 안 될 것이다. <s>ㅋㅋㅋㅋㅋ</s></p>
+<h3 id="error-manifest-for-hyperledgerfabric-toolslatest-not-found"><a class="markdownIt-Anchor" href="#error-manifest-for-hyperledgerfabric-toolslatest-not-found"></a> ERROR: manifest for hyperledger/fabric-tools:latest not found</h3>
+<p>에러 로그가 비슷하다. 위와 동일한 문제겠지? 이번에는 fabric-orderer가 아닌 fabric-tools가 최신 버전이 아니거나, tag가 달라서 생기는 문제일 것이다.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> fabric-tools 최신 버전으로 pull</span></span><br><span class="line">sudo docker pull hyperledger/fabric-tools:x86_64-1.1.0-rc1</span><br><span class="line"><span class="meta">#</span><span class="bash"> tag 수정</span></span><br><span class="line">sudo docker tag hyperledger/fabric-tools:x86_64-1.1.0-rc1 hyperledger/fabric-tools:latest</span><br></pre></td></tr></table></figure>
+<p>아래의 명령을 실행하자.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./byfn.sh -m up</span><br></pre></td></tr></table></figure>
+<p>또 안 될 수도 있다. 마지막으로 해결할 게 하나 남았지요.</p>
+<h3 id="error-manifest-for-hyperledgerfabric-peerlatest-not-found"><a class="markdownIt-Anchor" href="#error-manifest-for-hyperledgerfabric-peerlatest-not-found"></a> ERROR: manifest for hyperledger/fabric-peer:latest not found</h3>
+<p>이번에도 같은 문제겠네요. 명령어 실행 고고!</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> fabric-peer 최신 버전으로 pull</span></span><br><span class="line">sudo docker pull hyperledger/fabric-peer:x86_64-1.1.0-rc1</span><br><span class="line"><span class="meta">#</span><span class="bash"> tag 수정</span></span><br><span class="line">sudo docker tag hyperledger/fabric-peer:x86_64-1.1.0-rc1 hyperledger/fabric-peer:latest</span><br></pre></td></tr></table></figure>
+<p>자, 이제 아래의 명령을 실행해 보시지요.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./byfn.sh -m up</span><br></pre></td></tr></table></figure>
+<p>아마 이제야 비로소 실행될 것이다! 마지막 로그는,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Query Result: 90</span><br><span class="line">2017-05-16 17:08:15.158 UTC [main] main -&gt; INFO 008 Exiting.....</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; Query on peer1.org2 on channel &#39;mychannel&#39; is successful &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; All GOOD, BYFN execution completed &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> _____   _   _   ____</span><br><span class="line">| ____| | \ | | |  _ \</span><br><span class="line">|  _|   |  \| | | | | |</span><br><span class="line">| |___  | |\  | | |_| |</span><br><span class="line">|_____| |_| \_| |____&#x2F;</span><br></pre></td></tr></table></figure>
+<p>이거겠죠? 네! 드디어 네트워크 구축에 성공하셨습니다! 짝짝짝~</p>
+<p>아, fabric의 최신 버전은 <a target="_blank" rel="noopener" href="https://hub.docker.com/r/hyperledger">이 링크</a>에서 확인 가능하다. 접속 후 보고 싶은 repo의 detail에서 tag로 들어가 살펴보면 언제 무엇으로 업데이트 되었는지 알 수 있다. <mark><strong>not found 에러를 만난다면 docker 명령의 일부만 수정해서 모두 대응 가능하다.</strong></mark></p>
+<h3 id="엥-그래도-안-되는데요"><a class="markdownIt-Anchor" href="#엥-그래도-안-되는데요"></a> 엥? 그래도 안 되는데요?</h3>
+<p><code>./btfn.sh -m up</code> 명령어를 실행하다가 새로운 오류 친구를 만났다. docker-compose가 설치되어 있는데 못 찾는다지 뭐야.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">UTC [main] main -&gt; INFO 001 Exiting.....</span><br><span class="line">LOCAL_VERSION=1.1.0</span><br><span class="line">DOCKER_IMAGE_VERSION=1.1.0</span><br><span class="line">./byfn.sh: line 159: docker-compose: command not found</span><br><span class="line">ERROR !!!! Unable to start network</span><br></pre></td></tr></table></figure>
+<p>이게 말이나 되는 소리?</p>
+<p>도커 이미지 다 지우고 다시 받았는데도 저런다. 혹시나 싶어서 아래의 명령어로 네트워크를 내려 보았는데,</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./byfn.sh -m down</span><br></pre></td></tr></table></figure>
+<p>그 이후 다시 올려 보니</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./byfn.sh -m up</span><br></pre></td></tr></table></figure>
+<p>잘 된다. ^^</p>
+<br>
+<h2 id="5-네트워크-다운시키기"><a class="markdownIt-Anchor" href="#5-네트워크-다운시키기"></a> 5. 네트워크 다운시키기</h2>
+<p>네트워크를 구축했으면 내릴 수도 있어야겠지? 내려 봅시다!</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ./byfn.sh -m down</span><br></pre></td></tr></table></figure>
+<p>키키. 놀랍게도 한 번에 내려갔다~! 나이스!</p>
+<br>
+        </div>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사각형 광고 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9881428965884966"
+     data-ad-slot="1478713370"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://d2fault.github.io/2018/05/15/20180515-hyperledger-fabric-tutorial-1/" data-id="cklugedmy006dnf1ugoacb5gv" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/d2fault" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/rss2.xml" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/05/16/20180516-hyperledger-fabric-tutorial-2/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            [Hyperledger] Fabric 튜토리얼(2) - Tools 실습하기
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/05/10/20180510-blockchain-ico-case/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">[Blockchain] ICO 사례(5)</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/12/31/20231231-diary/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_diary.png)" alt="[Diary] 2023년 회고하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Anything/">Anything</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Anything/Diary/">Diary</a></p>
+                            <p class="item-title"><a href="/2023/12/31/20231231-diary/" class="title">[Diary] 2023년 회고하기</a></p>
+                            <p class="item-date"><time datetime="2023-12-31T12:03:03.000Z" itemprop="datePublished">2023-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/05/07/20230507-android-design-module-development-story/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_android.png)" alt="[Android] 안드로이드 개발자의 디자인 시스템(모듈) 개발기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2023/05/07/20230507-android-design-module-development-story/" class="title">[Android] 안드로이드 개발자의 디자인 시스템(모듈) 개발기</a></p>
+                            <p class="item-date"><time datetime="2023-05-07T08:18:16.000Z" itemprop="datePublished">2023-05-07</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/12/31/20221231-diary/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_diary.png)" alt="[Diary] 2022년 회고하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Anything/">Anything</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Anything/Diary/">Diary</a></p>
+                            <p class="item-title"><a href="/2022/12/31/20221231-diary/" class="title">[Diary] 2022년 회고하기</a></p>
+                            <p class="item-date"><time datetime="2022-12-31T11:12:22.000Z" itemprop="datePublished">2022-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/12/25/20221225-2023-goodnote-diary-and-free-note-templates-for-free/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_post.png)" alt="[GoodNote] 2023 굿노트 다이어리, 프리노트 무료 배포" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blog/">Blog</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Blog/Information/">Information</a></p>
+                            <p class="item-title"><a href="/2022/12/25/20221225-2023-goodnote-diary-and-free-note-templates-for-free/" class="title">[GoodNote] 2023 굿노트 다이어리, 프리노트 무료 배포</a></p>
+                            <p class="item-date"><time datetime="2022-12-25T13:36:22.000Z" itemprop="datePublished">2022-12-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/07/21/20220721-android-contentobserver/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_android.png)" alt="[Android] ContentObserver 알아보기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2022/07/21/20220721-android-contentobserver/" class="title">[Android] ContentObserver 알아보기</a></p>
+                            <p class="item-date"><time datetime="2022-07-21T13:02:33.000Z" itemprop="datePublished">2022-07-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/">Anything</a><span class="category-list-count">55</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/Diary/">Diary</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/Review/">Review</a><span class="category-list-count">34</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/">Blog</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/Hexo/">Hexo</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/Information/">Information</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/">IT</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Blockchain/">Blockchain</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Linux/">Linux</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Others/">Others</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Android/">Android</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/C-C/">C/C++</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android/" style="font-size: 10.71px;">Android</a> <a href="/tags/CentOS/" style="font-size: 12.86px;">CentOS</a> <a href="/tags/Composer/" style="font-size: 13.57px;">Composer</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Ethereum/" style="font-size: 16.43px;">Ethereum</a> <a href="/tags/Fabric/" style="font-size: 12.86px;">Fabric</a> <a href="/tags/GO/" style="font-size: 10px;">GO</a> <a href="/tags/Hyperledger/" style="font-size: 18.57px;">Hyperledger</a> <a href="/tags/ICO/" style="font-size: 12.86px;">ICO</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Solidity/" style="font-size: 12.86px;">Solidity</a> <a href="/tags/Tip/" style="font-size: 14.29px;">Tip</a> <a href="/tags/Tutorial/" style="font-size: 15.71px;">Tutorial</a> <a href="/tags/adb/" style="font-size: 10px;">adb</a> <a href="/tags/android/" style="font-size: 16.43px;">android</a> <a href="/tags/architect/" style="font-size: 10px;">architect</a> <a href="/tags/audiofocus/" style="font-size: 10.71px;">audiofocus</a> <a href="/tags/autoconf/" style="font-size: 10px;">autoconf</a> <a href="/tags/automake/" style="font-size: 10px;">automake</a> <a href="/tags/bitmask/" style="font-size: 10px;">bitmask</a> <a href="/tags/branch/" style="font-size: 10px;">branch</a> <a href="/tags/clean-code/" style="font-size: 10px;">clean code</a> <a href="/tags/consolidate/" style="font-size: 10px;">consolidate</a> <a href="/tags/contentobserver/" style="font-size: 10px;">contentobserver</a> <a href="/tags/contentprovider/" style="font-size: 10px;">contentprovider</a> <a href="/tags/context/" style="font-size: 10px;">context</a> <a href="/tags/coroutine/" style="font-size: 12.14px;">coroutine</a> <a href="/tags/customdialog/" style="font-size: 10px;">customdialog</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/deview/" style="font-size: 10px;">deview</a> <a href="/tags/dispatchers/" style="font-size: 10px;">dispatchers</a> <a href="/tags/ejs/" style="font-size: 10px;">ejs</a> <a href="/tags/enumset/" style="font-size: 10px;">enumset</a> <a href="/tags/exel/" style="font-size: 10px;">exel</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fullscreen/" style="font-size: 10px;">fullscreen</a> <a href="/tags/geth/" style="font-size: 10px;">geth</a> <a href="/tags/git/" style="font-size: 11.43px;">git</a> <a href="/tags/goodnote/" style="font-size: 10px;">goodnote</a> <a href="/tags/java/" style="font-size: 11.43px;">java</a> <a href="/tags/kotlin/" style="font-size: 14.29px;">kotlin</a> <a href="/tags/m4/" style="font-size: 10px;">m4</a> <a href="/tags/module/" style="font-size: 10px;">module</a> <a href="/tags/mustache/" style="font-size: 10px;">mustache</a> <a href="/tags/node-js/" style="font-size: 11.43px;">node.js</a> <a href="/tags/powerpoint/" style="font-size: 10px;">powerpoint</a> <a href="/tags/ppt/" style="font-size: 10px;">ppt</a> <a href="/tags/process/" style="font-size: 10px;">process</a> <a href="/tags/redis/" style="font-size: 10.71px;">redis</a> <a href="/tags/refactoring/" style="font-size: 10px;">refactoring</a> <a href="/tags/research/" style="font-size: 10px;">research</a> <a href="/tags/sdk/" style="font-size: 10px;">sdk</a> <a href="/tags/sentinel/" style="font-size: 10.71px;">sentinel</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/task/" style="font-size: 10px;">task</a> <a href="/tags/tip/" style="font-size: 10.71px;">tip</a> <a href="/tags/token-economy/" style="font-size: 10.71px;">token economy</a> <a href="/tags/webview/" style="font-size: 10.71px;">webview</a> <a href="/tags/%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD/" style="font-size: 15px;">개발환경</a> <a href="/tags/%EA%B5%BF%EB%85%B8%ED%8A%B8/" style="font-size: 10px;">굿노트</a> <a href="/tags/%EB%82%98%EB%85%B8%ED%94%84%EB%A0%88%EC%86%8C/" style="font-size: 10px;">나노프레소</a> <a href="/tags/%EB%A6%AC%EB%B7%B0/" style="font-size: 20px;">리뷰</a> <a href="/tags/%EB%A7%A4%EC%8B%9C%EC%97%85/" style="font-size: 10px;">매시업</a> <a href="/tags/%EB%AA%85%EB%A0%B9%EC%96%B4/" style="font-size: 10px;">명령어</a> <a href="/tags/%EB%AC%B8%EB%B2%95/" style="font-size: 17.14px;">문법</a> <a href="/tags/%EB%B3%B5%EA%B5%AC/" style="font-size: 10px;">복구</a> <a href="/tags/%EB%B3%B5%EC%8B%B1/" style="font-size: 10.71px;">복싱</a> <a href="/tags/%EB%B8%94%EB%A3%A8%ED%88%AC%EC%8A%A4%EC%9D%B4%EC%96%B4%ED%8F%B0/" style="font-size: 10.71px;">블루투스이어폰</a> <a href="/tags/%EB%B9%84%ED%88%AC%EB%B9%84/" style="font-size: 11.43px;">비투비</a> <a href="/tags/%EB%B9%85%EC%8A%A4%EB%B9%84/" style="font-size: 10px;">빅스비</a> <a href="/tags/%EC%83%9D%EA%B0%81/" style="font-size: 10px;">생각</a> <a href="/tags/%EC%84%A4%EC%B9%98/" style="font-size: 17.14px;">설치</a> <a href="/tags/%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85/" style="font-size: 10px;">스타트업</a> <a href="/tags/%EC%8B%9C%EB%A6%AC/" style="font-size: 10px;">시리</a> <a href="/tags/%EC%97%A0%EC%A7%80%ED%85%8D/" style="font-size: 10.71px;">엠지텍</a> <a href="/tags/%EC%98%81%ED%99%94/" style="font-size: 19.29px;">영화</a> <a href="/tags/%EC%9D%B8%EC%BD%94%EB%94%A9/" style="font-size: 10px;">인코딩</a> <a href="/tags/%EC%9D%BC%EC%83%81/" style="font-size: 17.86px;">일상</a> <a href="/tags/%EC%9E%90%EA%B2%A9-%EC%A6%9D%EB%AA%85/" style="font-size: 10px;">자격 증명</a> <a href="/tags/%EC%A7%80%EC%A0%81%EC%9E%AC%EC%82%B0%EA%B6%8C/" style="font-size: 10px;">지적재산권</a> <a href="/tags/%EC%B1%85/" style="font-size: 10.71px;">책</a> <a href="/tags/%EC%BB%A4%ED%94%BC/" style="font-size: 10px;">커피</a> <a href="/tags/%EC%BD%94%EC%9D%B8/" style="font-size: 11.43px;">코인</a> <a href="/tags/%EC%BD%94%ED%8B%80%EB%A6%B0/" style="font-size: 10px;">코틀린</a> <a href="/tags/%EC%BD%98%EC%84%9C%ED%8A%B8/" style="font-size: 11.43px;">콘서트</a> <a href="/tags/%ED%85%9C%ED%94%8C%EB%A6%BF/" style="font-size: 10px;">템플릿</a> <a href="/tags/%ED%86%A0%ED%81%B0%EC%9D%B4%EC%BD%94%EB%85%B8%EB%AF%B8/" style="font-size: 10.71px;">토큰이코노미</a> <a href="/tags/%ED%8A%B9%ED%97%88/" style="font-size: 10px;">특허</a> <a href="/tags/%ED%8C%8C%EC%9D%BC%EC%9E%85%EC%B6%9C%EB%A0%A5/" style="font-size: 10px;">파일입출력</a> <a href="/tags/%ED%95%80%ED%85%8C%ED%81%AC/" style="font-size: 10px;">핀테크</a> <a href="/tags/%ED%95%B4%EC%BB%A4%ED%86%A4/" style="font-size: 10px;">해커톤</a> <a href="/tags/%ED%9A%8C%EA%B3%A0/" style="font-size: 14.29px;">회고</a> <a href="/tags/%ED%9B%84%EA%B8%B0/" style="font-size: 10.71px;">후기</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://blog.nullptr.kr">vee&#39;s Blog</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+                <div class="widget-wrap widget-float">
+    
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- huemen sidebar -->
+        <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-9881428965884966"
+                data-ad-slot="9267898354"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    
+    </div>
+            
+        
+    </div>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사각형 광고 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9881428965884966"
+     data-ad-slot="1478713370"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2024 Jiyoung(d2fault)</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'd2fault';
+    
+    
+    var disqus_url = 'https://d2fault.github.io/2018/05/15/20180515-hyperledger-fabric-tutorial-1/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+      <script data-ad-client="ca-pub-9881428965884966" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

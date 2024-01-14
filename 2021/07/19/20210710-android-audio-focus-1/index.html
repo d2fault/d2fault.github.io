@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>[Android] AudioFocus 알아보기(1) - 왜, 어떻게 사용하는가 | 잡동사니 수집광</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="android,audiofocus,webview,java" />
+    
+    <meta name="description" content="AudioFocus가 적용되어 있지 않은 애플리케이션에 AudioFocus를 적용해야만 하는 일이 생겼다. 지금까지는 쓸 일도, 그럴 필요도 없었기에 이 친구의 존재를 모르고 있었는데 적용할 일이 생겼으니 공부해 보자 싶었다.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Android] AudioFocus 알아보기(1) - 왜, 어떻게 사용하는가">
+<meta property="og:url" content="https://d2fault.github.io/2021/07/19/20210710-android-audio-focus-1/index.html">
+<meta property="og:site_name" content="잡동사니 수집광">
+<meta property="og:description" content="AudioFocus가 적용되어 있지 않은 애플리케이션에 AudioFocus를 적용해야만 하는 일이 생겼다. 지금까지는 쓸 일도, 그럴 필요도 없었기에 이 친구의 존재를 모르고 있었는데 적용할 일이 생겼으니 공부해 보자 싶었다.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://d2fault.github.io/images/thumbnail/thumb_android.png">
+<meta property="article:published_time" content="2021-07-19T14:29:55.000Z">
+<meta property="article:modified_time" content="2024-01-03T14:01:13.912Z">
+<meta property="article:author" content="Jiyoung(d2fault)">
+<meta property="article:tag" content="android">
+<meta property="article:tag" content="audiofocus">
+<meta property="article:tag" content="webview">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://d2fault.github.io/images/thumbnail/thumb_android.png">
+    
+    <link rel="canonical" href="https://d2fault.github.io/2021/07/19/20210710-android-audio-focus-1/"/>
+    
+        <link rel="alternate" href="/rss2.xml" title="잡동사니 수집광" type="application/atom+xml" />
+    
+
+    
+        <link rel="icon" href="/css/images/favicon_d2fault.png" />
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" type="text/css" href="">
+    
+<link rel="stylesheet" href="https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.css">
+
+    
+<link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css">
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3QNGCBD959"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3QNGCBD959');
+</script>
+<!-- End Google Analytics -->
+
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Anything/">Anything</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Anything/Diary/">Diary</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Anything/Review/">Review</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Blog/">Blog</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Blog/Hexo/">Hexo</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Blog/Information/">Information</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/IT/">IT</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/IT/Blockchain/">Blockchain</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/IT/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/IT/Others/">Others</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/">Programming</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Android/">Android</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/C-C/">C/C++</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/Java/">Java</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Programming/JavaScript/">JavaScript</a></li></ul></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Programming/Android/">Android</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-20210710-android-audio-focus-1" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        [Android] AudioFocus 알아보기(1) - 왜, 어떻게 사용하는가
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/07/19/20210710-android-audio-focus-1/" class="article-date">
+       <time datetime="2021-07-19T14:29:55.000Z" itemprop="datePublished">2021-07-19</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/07/19/20210710-android-audio-focus-1/" class="article-date">
+     <time datetime="2024-01-03T14:01:13.912Z" itemprop="dateModified">2024-01-03</time>
+  </a>
+</div>
+
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/android/" rel="tag">android</a>, <a class="tag-link-link" href="/tags/audiofocus/" rel="tag">audiofocus</a>, <a class="tag-link-link" href="/tags/java/" rel="tag">java</a>, <a class="tag-link-link" href="/tags/webview/" rel="tag">webview</a>
+    </div>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 수평형 광고 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9881428965884966"
+     data-ad-slot="2468361412"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+            <h1 id="개요"><a class="markdownIt-Anchor" href="#개요"></a> 개요</h1>
+<p>AudioFocus가 적용되어 있지 않은 애플리케이션에 AudioFocus를 적용해야만 하는 일이 생겼다. 지금까지는 쓸 일도, 그럴 필요도 없었기에 이 친구의 존재를 모르고 있었는데 적용할 일이 생겼으니 공부해 보자 싶었다. 이번 포스팅에서는 AudioFocus를 왜 써야 하는지, 그리고 어떻게 사용해야 하는지에 대해 적어보려고 한다.</p>
+<br>
+<h1 id="audiofocus가-뭐야"><a class="markdownIt-Anchor" href="#audiofocus가-뭐야"></a> AudioFocus가 뭐야?</h1>
+<p>Android OS에게 “나 지금 미디어 필요해! 쓴다!” 하고 통보하는 기능으로, 일종의 약속이다. AudioFocus를 요청할 때에는 <strong>어떤 용도로 오디오를 사용하는지</strong>에 대한 정보를 함께 전달해야 한다. 용도에 대한 정보는 <code>AudioAttributes</code> 인스턴스 생성 후 <code>setUseage()</code> 와 <code>setContentType()</code> 를 통해 세팅할 수 있으며, 다음의 값 중 하나를 가진다. <s>(번역은 셀프입니다. ㅎㅎ;😉</s></p>
+<h2 id="setuseage-list"><a class="markdownIt-Anchor" href="#setuseage-list"></a> setUseage List</h2>
+<table>
+<thead>
+<tr>
+<th>값</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>USAGE_UNKNOWN</td>
+<td>Usage value to use when the usage is unknown.</td>
+</tr>
+<tr>
+<td>USAGE_MEDIA</td>
+<td>Usage value to use when the usage is media, such as music, or movie soundtracks.</td>
+</tr>
+<tr>
+<td>USAGE_VOICE_COMMUNICATION</td>
+<td>Usage value to use when the usage is voice communications, such as telephony or VoIP.</td>
+</tr>
+<tr>
+<td>USAGE_VOICE_COMMUNICATION_SIGNALLING</td>
+<td>Usage value to use when the usage is in-call signalling, such as wite a “busy” beep, or DTMF tones.</td>
+</tr>
+<tr>
+<td>USAGE_ALARM</td>
+<td>Usage value to use when the usage is an alarm (e.g. wake-up alarm).</td>
+</tr>
+<tr>
+<td>USAGE_NOTIFICATION</td>
+<td>Usage value to use when the usage is notification. See other notification usages for more specialized uses.</td>
+</tr>
+<tr>
+<td>USAGE_NOTIFICATION_RINGTONE</td>
+<td>Usage value to use when the usage is telephony ringtone.</td>
+</tr>
+<tr>
+<td>USAGE_NOTIFICATION_COMMUNICATION_REQUEST</td>
+<td>Usage value to use when the usage is a request to enter/end a communication, such as a VoIP communication or video-conference.</td>
+</tr>
+<tr>
+<td>USAGE_NOTIFICATION_COMMUNICATION_INSTANT</td>
+<td>Usage value to use when the usage is notification for an “instant” communication such as a chat, or SMS.</td>
+</tr>
+<tr>
+<td>USAGE_NOTIFICATION_COMMUNICATION_DELAYED</td>
+<td>Usage value to use when the usage is notification for a non-immediate type of communication such as e-mail.</td>
+</tr>
+<tr>
+<td>USAGE_NOTIFICATION_EVENT</td>
+<td>Usage value to use when the usage is to attract the user’s attention, such as a reminder or low battery warning.</td>
+</tr>
+<tr>
+<td>USAGE_ASSISTANCE_ACCESSIBILITY</td>
+<td>Usage value to use when the usage is for accessibility, such as with* a screen reader.</td>
+</tr>
+<tr>
+<td>USAGE_ASSISTANCE_NAVIGATION_GUIDANCE</td>
+<td>Usage value to use when the usage is driving or navigation directions.</td>
+</tr>
+<tr>
+<td>USAGE_ASSISTANCE_SONIFICATION</td>
+<td>Usage value to use when the usage is sonification, such as  with user interface sounds.</td>
+</tr>
+<tr>
+<td>USAGE_GAME</td>
+<td>Usage value to use when the usage is for game audio.</td>
+</tr>
+<tr>
+<td>USAGE_ASSISTANT</td>
+<td>Usage value to use for audio responses to user queries, audio instructions or help utterances.</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h2 id="setcontenttype-list"><a class="markdownIt-Anchor" href="#setcontenttype-list"></a> setContentType List</h2>
+<table>
+<thead>
+<tr>
+<th>값</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CONTENT_TYPE_UNKNOWN</td>
+<td>Content type value to use when the content type is unknown, or other than the ones defined.</td>
+</tr>
+<tr>
+<td>CONTENT_TYPE_SPEECH</td>
+<td>Content type value to use when the content type is speech.</td>
+</tr>
+<tr>
+<td>CONTENT_TYPE_MUSIC</td>
+<td>Content type value to use when the content type is music.</td>
+</tr>
+<tr>
+<td>CONTENT_TYPE_MOVIE</td>
+<td>Content type value to use when the content type is a soundtrack, typically accompanying a movie or TV program.</td>
+</tr>
+<tr>
+<td>CONTENT_TYPE_SONIFICATION</td>
+<td>Content type value to use when the content type is a sound used to accompany a user action, such as a beep or sound effect expressing a key click, or event, such as the type of a sound for a bonus being received in a game. These sounds are mostly synthesized or short Foley sounds.</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h1 id="audiofocus를-뺏길-땐-어떻게-해"><a class="markdownIt-Anchor" href="#audiofocus를-뺏길-땐-어떻게-해"></a> AudioFocus를 뺏길 땐 어떻게 해?</h1>
+<p>Android는 다 계획이 있다, 이 말이야! 이 경우를 대비해서 Listener(<code>AudioManager.OnAudioFocusChangeListener</code>) 를 제공한다. 개발자는  이 Listener에서 처리할 수 있는 이벤트는 다음과 같다.</p>
+<h2 id="audiofocus-change-listener-event-list"><a class="markdownIt-Anchor" href="#audiofocus-change-listener-event-list"></a> AudioFocus Change Listener Event List</h2>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AUDIOFOCUS_NONE</td>
+<td>Used to indicate no audio focus has been gained or lost, or requested.</td>
+</tr>
+<tr>
+<td>AUDIOFOCUS_GAIN</td>
+<td>Used to indicate a gain of audio focus, or a request of audio focus, of unknown duration.</td>
+</tr>
+<tr>
+<td>AUDIOFOCUS_GAIN_TRANSIENT</td>
+<td>Used to indicate a temporary gain or request of audio focus, anticipated to last a short amount of time. Examples of temporary changes are the playback of driving directions, or an event notification.</td>
+</tr>
+<tr>
+<td>AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK</td>
+<td>Used to indicate a temporary request of audio focus, anticipated to last a short amount of time, and where it is acceptable for other audio applications to keep playing after having lowered their output level (also referred to as “ducking”).<br />Examples of temporary changes are the playback of driving directions where playback of music in the background is acceptable.</td>
+</tr>
+<tr>
+<td>AUDIOFOCUS_GAIN_TRANSIENT_EXCLUSIVE</td>
+<td>Used to indicate a temporary request of audio focus, anticipated to last a short amount of time, during which no other applications, or system components, should play anything.<br />Examples of exclusive and transient audio focus requests are voice memo recording and speech recognition, during which the system shouldn’t play any notifications, and media playback should have paused.</td>
+</tr>
+<tr>
+<td>AUDIOFOCUS_LOSS</td>
+<td>Used to indicate a loss of audio focus of unknown duration.</td>
+</tr>
+<tr>
+<td>AUDIOFOCUS_LOSS_TRANSIENT</td>
+<td>Used to indicate a transient loss of audio focus.</td>
+</tr>
+<tr>
+<td>AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK</td>
+<td>Used to indicate a transient loss of audio focus where the loser of the audio focus can lower its output volume if it wants to continue playing (also referred to as “ducking”), as the new focus owner doesn’t require others to be silent.</td>
+</tr>
+</tbody>
+</table>
+<br>
+<h1 id="어떻게-사용해"><a class="markdownIt-Anchor" href="#어떻게-사용해"></a> 어떻게 사용해?</h1>
+<p>음, <code>Helper</code> 라는 단어 사용을 지양해야 한다고 하는데 마땅한 단어가 떠오르지 않는다. 그래서 어쩔 수 없이 <code>AudioFocusHelper.java</code> class를 만들게 되었다. ^^; 필요한 곳에서 <code>AudioFocus</code> 를 <code>context</code> 와 함께 생성한다. 이후, <code>AudioFocus</code> 가 필요할 때 <code>requestAudioFocus()</code> 함수를 호출하면 깔끔하게 완성!</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AudioFocusHelper</span> <span class="keyword">implements</span> <span class="title">AudioManager</span>.<span class="title">OnAudioFocusChangeListener</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = AudioFocusHelper.class.getSimpleName();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AudioManager audioManager;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AudioFocusRequest audioFocusRequest;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AudioFocusHelper</span><span class="params">(<span class="meta">@Nonnull</span> Context context)</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">&quot;Create AudioFocusHelper&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) &#123;</span><br><span class="line">            audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);</span><br><span class="line">            AudioAttributes mAudioAttributes = <span class="keyword">new</span> AudioAttributes.Builder()</span><br><span class="line">                    .setUsage(AudioAttributes.USAGE_MEDIA)</span><br><span class="line">                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)</span><br><span class="line">                    .build();</span><br><span class="line">            audioFocusRequest = <span class="keyword">new</span> AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)</span><br><span class="line">                    .setAudioAttributes(mAudioAttributes)</span><br><span class="line">                    .setAcceptsDelayedFocusGain(<span class="keyword">true</span>)</span><br><span class="line">                    .setOnAudioFocusChangeListener(<span class="keyword">this</span>)</span><br><span class="line">                    .setWillPauseWhenDucked(<span class="keyword">true</span>)</span><br><span class="line">                    .build();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">requestAudioFocus</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">&quot;AudioFocus &gt;&gt; called requestAudioFocus() / Build.VERSION: &quot;</span> + Build.VERSION.SDK_INT);</span><br><span class="line">        <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) &#123;</span><br><span class="line">            Log.d(TAG, <span class="string">&quot;AudioFocus &gt;&gt; requestAudioFocus&quot;</span>);</span><br><span class="line">            audioManager.requestAudioFocus(audioFocusRequest);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAudioFocusChange</span><span class="params">(<span class="keyword">int</span> focusChange)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (focusChange) &#123;</span><br><span class="line">            <span class="keyword">case</span> AudioManager.AUDIOFOCUS_GAIN:</span><br><span class="line">                <span class="comment">// 이제부터 AudioFocus는 우리 앱의 소유!</span></span><br><span class="line">                Log.d(TAG, <span class="string">&quot;AudioFocus &gt;&gt; AUDIOFOCUS_GAIN&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> AudioManager.AUDIOFOCUS_GAIN_TRANSIENT:</span><br><span class="line">                <span class="comment">// 일시적으로 AudioFocus를 가져온다.</span></span><br><span class="line">                Log.d(TAG, <span class="string">&quot;AudioFocus &gt;&gt; AUDIOFOCUS_GAIN_TRANSIENT&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK:</span><br><span class="line">                <span class="comment">// 15초 이상 점유하면 안 된다. 앱의 소리가 나지만, Background App의 사운드가 작게 들릴 수 있다.</span></span><br><span class="line">                Log.d(TAG, <span class="string">&quot;AudioFocus &gt;&gt; AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> AudioManager.AUDIOFOCUS_LOSS:</span><br><span class="line">                Log.d(TAG, <span class="string">&quot;AudioFocus &gt;&gt; AUDIOFOCUS_LOSS&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:</span><br><span class="line">                <span class="comment">// 일시적인 LOSS로, 잠깐 사용한 App이 점유를 끝내면 가장 마지막에 GAIN한 App이 AudioFocus를 점유한다.</span></span><br><span class="line">                Log.d(TAG, <span class="string">&quot;AudioFocus &gt;&gt; AUDIOFOCUS_LOSS_TRANSIENT&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:</span><br><span class="line">                <span class="comment">// 볼륨을 낮추는 것을 권장한다.</span></span><br><span class="line">                Log.d(TAG, <span class="string">&quot;AudioFocus &gt;&gt; AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> AudioManager.AUDIOFOCUS_REQUEST_FAILED:</span><br><span class="line">                <span class="comment">// 요청 실패할 경우의 로직을 추가한다.</span></span><br><span class="line">                Log.d(TAG, <span class="string">&quot;AudioFocus &gt;&gt; AUDIOFOCUS_REQUEST_FAILED&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<br>
+<h1 id="마무리하며"><a class="markdownIt-Anchor" href="#마무리하며"></a> 마무리하며</h1>
+<p>필수 요건이 아닌 약속이라고 표현한 이유가 있다. 사실상 <code>AudioFocus</code> 를 요청하지 않아도 사운드 출력에는 문제가 없다. Android 플랫폼 생태계를 무시하고, ‘난 무조건 재생해야 해!’ 라는 억지를 부리고 싶다면 <code>AudioFocus</code> 없이 미디어를 출력해 버리면 된다. 혹은 <code>AUDIOFOCUS_LOSS</code> 이벤트를 받자마자 다시 GAIN하는 방법도 있지만, 당연히 <mark><strong>권장하지 않는다.</strong></mark></p>
+<p>플랫폼 위에 올라가는 서비스 개발자는 플랫폼의 약속을 이행하는 것이 좋다. 이 자그마한 규약들은 각각의 앱들이 최대한 ‘정상 범주’ 내에서 동작할 수 있도록 만들어졌다. <code>AudioFocus</code> 를 무시하고 재생하는 앱이 하나일 경우에도 문제이지만, 여러 앱이 이것을 무시하고 재생한다면 UX가 와장창 깨지고 말 것이다. 알람도 울리고, 음악도 재생되고, 또 다른 앱에서 게임 소리도 나고, 또 다른 앱에서 영상이 재생되는 등의 복합 상황이 발생할 수 있다. 플랫폼의 약속은, 이런 복합 상황을 어느 정도 Android OS에게 '위임’한다는 의미를 포함한다.</p>
+<br>
+
+        </div>
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사각형 광고 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9881428965884966"
+     data-ad-slot="1478713370"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://d2fault.github.io/2021/07/19/20210710-android-audio-focus-1/" data-id="clqxwyk5d0009z31u2cxdeule" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/d2fault" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/rss2.xml" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/07/26/20210726-android-audio-focus-2/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            [Android] AudioFocus 알아보기(2) - 커스텀과 확장
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/07/06/20210706-java-bitmask-and-enumset/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">[JAVA] BitMask에 관한 자그마한 고찰, 그리고 EnumSet</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/12/31/20231231-diary/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_diary.png)" alt="[Diary] 2023년 회고하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Anything/">Anything</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Anything/Diary/">Diary</a></p>
+                            <p class="item-title"><a href="/2023/12/31/20231231-diary/" class="title">[Diary] 2023년 회고하기</a></p>
+                            <p class="item-date"><time datetime="2023-12-31T12:03:03.000Z" itemprop="datePublished">2023-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/05/07/20230507-android-design-module-development-story/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_android.png)" alt="[Android] 안드로이드 개발자의 디자인 시스템(모듈) 개발기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2023/05/07/20230507-android-design-module-development-story/" class="title">[Android] 안드로이드 개발자의 디자인 시스템(모듈) 개발기</a></p>
+                            <p class="item-date"><time datetime="2023-05-07T08:18:16.000Z" itemprop="datePublished">2023-05-07</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/12/31/20221231-diary/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_diary.png)" alt="[Diary] 2022년 회고하기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Anything/">Anything</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Anything/Diary/">Diary</a></p>
+                            <p class="item-title"><a href="/2022/12/31/20221231-diary/" class="title">[Diary] 2022년 회고하기</a></p>
+                            <p class="item-date"><time datetime="2022-12-31T11:12:22.000Z" itemprop="datePublished">2022-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/12/25/20221225-2023-goodnote-diary-and-free-note-templates-for-free/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_post.png)" alt="[GoodNote] 2023 굿노트 다이어리, 프리노트 무료 배포" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Blog/">Blog</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Blog/Information/">Information</a></p>
+                            <p class="item-title"><a href="/2022/12/25/20221225-2023-goodnote-diary-and-free-note-templates-for-free/" class="title">[GoodNote] 2023 굿노트 다이어리, 프리노트 무료 배포</a></p>
+                            <p class="item-date"><time datetime="2022-12-25T13:36:22.000Z" itemprop="datePublished">2022-12-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/07/21/20220721-android-contentobserver/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/thumbnail/thumb_android.png)" alt="[Android] ContentObserver 알아보기" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Programming/">Programming</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Programming/Android/">Android</a></p>
+                            <p class="item-title"><a href="/2022/07/21/20220721-android-contentobserver/" class="title">[Android] ContentObserver 알아보기</a></p>
+                            <p class="item-date"><time datetime="2022-07-21T13:02:33.000Z" itemprop="datePublished">2022-07-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/">Anything</a><span class="category-list-count">55</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/Diary/">Diary</a><span class="category-list-count">21</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Anything/Review/">Review</a><span class="category-list-count">34</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/">Blog</a><span class="category-list-count">12</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/Hexo/">Hexo</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Blog/Information/">Information</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/">IT</a><span class="category-list-count">44</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Blockchain/">Blockchain</a><span class="category-list-count">30</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Linux/">Linux</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/IT/Others/">Others</a><span class="category-list-count">7</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/">Programming</a><span class="category-list-count">31</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Android/">Android</a><span class="category-list-count">17</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/C-C/">C/C++</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/Java/">Java</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Programming/JavaScript/">JavaScript</a><span class="category-list-count">11</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android/" style="font-size: 10.71px;">Android</a> <a href="/tags/CentOS/" style="font-size: 12.86px;">CentOS</a> <a href="/tags/Composer/" style="font-size: 13.57px;">Composer</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Ethereum/" style="font-size: 16.43px;">Ethereum</a> <a href="/tags/Fabric/" style="font-size: 12.86px;">Fabric</a> <a href="/tags/GO/" style="font-size: 10px;">GO</a> <a href="/tags/Hyperledger/" style="font-size: 18.57px;">Hyperledger</a> <a href="/tags/ICO/" style="font-size: 12.86px;">ICO</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Solidity/" style="font-size: 12.86px;">Solidity</a> <a href="/tags/Tip/" style="font-size: 14.29px;">Tip</a> <a href="/tags/Tutorial/" style="font-size: 15.71px;">Tutorial</a> <a href="/tags/adb/" style="font-size: 10px;">adb</a> <a href="/tags/android/" style="font-size: 16.43px;">android</a> <a href="/tags/architect/" style="font-size: 10px;">architect</a> <a href="/tags/audiofocus/" style="font-size: 10.71px;">audiofocus</a> <a href="/tags/autoconf/" style="font-size: 10px;">autoconf</a> <a href="/tags/automake/" style="font-size: 10px;">automake</a> <a href="/tags/bitmask/" style="font-size: 10px;">bitmask</a> <a href="/tags/branch/" style="font-size: 10px;">branch</a> <a href="/tags/clean-code/" style="font-size: 10px;">clean code</a> <a href="/tags/consolidate/" style="font-size: 10px;">consolidate</a> <a href="/tags/contentobserver/" style="font-size: 10px;">contentobserver</a> <a href="/tags/contentprovider/" style="font-size: 10px;">contentprovider</a> <a href="/tags/context/" style="font-size: 10px;">context</a> <a href="/tags/coroutine/" style="font-size: 12.14px;">coroutine</a> <a href="/tags/customdialog/" style="font-size: 10px;">customdialog</a> <a href="/tags/design/" style="font-size: 10px;">design</a> <a href="/tags/deview/" style="font-size: 10px;">deview</a> <a href="/tags/dispatchers/" style="font-size: 10px;">dispatchers</a> <a href="/tags/ejs/" style="font-size: 10px;">ejs</a> <a href="/tags/enumset/" style="font-size: 10px;">enumset</a> <a href="/tags/exel/" style="font-size: 10px;">exel</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/fullscreen/" style="font-size: 10px;">fullscreen</a> <a href="/tags/geth/" style="font-size: 10px;">geth</a> <a href="/tags/git/" style="font-size: 11.43px;">git</a> <a href="/tags/goodnote/" style="font-size: 10px;">goodnote</a> <a href="/tags/java/" style="font-size: 11.43px;">java</a> <a href="/tags/kotlin/" style="font-size: 14.29px;">kotlin</a> <a href="/tags/m4/" style="font-size: 10px;">m4</a> <a href="/tags/module/" style="font-size: 10px;">module</a> <a href="/tags/mustache/" style="font-size: 10px;">mustache</a> <a href="/tags/node-js/" style="font-size: 11.43px;">node.js</a> <a href="/tags/powerpoint/" style="font-size: 10px;">powerpoint</a> <a href="/tags/ppt/" style="font-size: 10px;">ppt</a> <a href="/tags/process/" style="font-size: 10px;">process</a> <a href="/tags/redis/" style="font-size: 10.71px;">redis</a> <a href="/tags/refactoring/" style="font-size: 10px;">refactoring</a> <a href="/tags/research/" style="font-size: 10px;">research</a> <a href="/tags/sdk/" style="font-size: 10px;">sdk</a> <a href="/tags/sentinel/" style="font-size: 10.71px;">sentinel</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/task/" style="font-size: 10px;">task</a> <a href="/tags/tip/" style="font-size: 10.71px;">tip</a> <a href="/tags/token-economy/" style="font-size: 10.71px;">token economy</a> <a href="/tags/webview/" style="font-size: 10.71px;">webview</a> <a href="/tags/%EA%B0%9C%EB%B0%9C%ED%99%98%EA%B2%BD/" style="font-size: 15px;">개발환경</a> <a href="/tags/%EA%B5%BF%EB%85%B8%ED%8A%B8/" style="font-size: 10px;">굿노트</a> <a href="/tags/%EB%82%98%EB%85%B8%ED%94%84%EB%A0%88%EC%86%8C/" style="font-size: 10px;">나노프레소</a> <a href="/tags/%EB%A6%AC%EB%B7%B0/" style="font-size: 20px;">리뷰</a> <a href="/tags/%EB%A7%A4%EC%8B%9C%EC%97%85/" style="font-size: 10px;">매시업</a> <a href="/tags/%EB%AA%85%EB%A0%B9%EC%96%B4/" style="font-size: 10px;">명령어</a> <a href="/tags/%EB%AC%B8%EB%B2%95/" style="font-size: 17.14px;">문법</a> <a href="/tags/%EB%B3%B5%EA%B5%AC/" style="font-size: 10px;">복구</a> <a href="/tags/%EB%B3%B5%EC%8B%B1/" style="font-size: 10.71px;">복싱</a> <a href="/tags/%EB%B8%94%EB%A3%A8%ED%88%AC%EC%8A%A4%EC%9D%B4%EC%96%B4%ED%8F%B0/" style="font-size: 10.71px;">블루투스이어폰</a> <a href="/tags/%EB%B9%84%ED%88%AC%EB%B9%84/" style="font-size: 11.43px;">비투비</a> <a href="/tags/%EB%B9%85%EC%8A%A4%EB%B9%84/" style="font-size: 10px;">빅스비</a> <a href="/tags/%EC%83%9D%EA%B0%81/" style="font-size: 10px;">생각</a> <a href="/tags/%EC%84%A4%EC%B9%98/" style="font-size: 17.14px;">설치</a> <a href="/tags/%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85/" style="font-size: 10px;">스타트업</a> <a href="/tags/%EC%8B%9C%EB%A6%AC/" style="font-size: 10px;">시리</a> <a href="/tags/%EC%97%A0%EC%A7%80%ED%85%8D/" style="font-size: 10.71px;">엠지텍</a> <a href="/tags/%EC%98%81%ED%99%94/" style="font-size: 19.29px;">영화</a> <a href="/tags/%EC%9D%B8%EC%BD%94%EB%94%A9/" style="font-size: 10px;">인코딩</a> <a href="/tags/%EC%9D%BC%EC%83%81/" style="font-size: 17.86px;">일상</a> <a href="/tags/%EC%9E%90%EA%B2%A9-%EC%A6%9D%EB%AA%85/" style="font-size: 10px;">자격 증명</a> <a href="/tags/%EC%A7%80%EC%A0%81%EC%9E%AC%EC%82%B0%EA%B6%8C/" style="font-size: 10px;">지적재산권</a> <a href="/tags/%EC%B1%85/" style="font-size: 10.71px;">책</a> <a href="/tags/%EC%BB%A4%ED%94%BC/" style="font-size: 10px;">커피</a> <a href="/tags/%EC%BD%94%EC%9D%B8/" style="font-size: 11.43px;">코인</a> <a href="/tags/%EC%BD%94%ED%8B%80%EB%A6%B0/" style="font-size: 10px;">코틀린</a> <a href="/tags/%EC%BD%98%EC%84%9C%ED%8A%B8/" style="font-size: 11.43px;">콘서트</a> <a href="/tags/%ED%85%9C%ED%94%8C%EB%A6%BF/" style="font-size: 10px;">템플릿</a> <a href="/tags/%ED%86%A0%ED%81%B0%EC%9D%B4%EC%BD%94%EB%85%B8%EB%AF%B8/" style="font-size: 10.71px;">토큰이코노미</a> <a href="/tags/%ED%8A%B9%ED%97%88/" style="font-size: 10px;">특허</a> <a href="/tags/%ED%8C%8C%EC%9D%BC%EC%9E%85%EC%B6%9C%EB%A0%A5/" style="font-size: 10px;">파일입출력</a> <a href="/tags/%ED%95%80%ED%85%8C%ED%81%AC/" style="font-size: 10px;">핀테크</a> <a href="/tags/%ED%95%B4%EC%BB%A4%ED%86%A4/" style="font-size: 10px;">해커톤</a> <a href="/tags/%ED%9A%8C%EA%B3%A0/" style="font-size: 14.29px;">회고</a> <a href="/tags/%ED%9B%84%EA%B8%B0/" style="font-size: 10.71px;">후기</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://blog.nullptr.kr">vee&#39;s Blog</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+                <div class="widget-wrap widget-float">
+    
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- huemen sidebar -->
+        <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-9881428965884966"
+                data-ad-slot="9267898354"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    
+    </div>
+            
+        
+    </div>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 사각형 광고 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-9881428965884966"
+     data-ad-slot="1478713370"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2024 Jiyoung(d2fault)</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'd2fault';
+    
+    
+    var disqus_url = 'https://d2fault.github.io/2021/07/19/20210710-android-audio-focus-1/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+      <script data-ad-client="ca-pub-9881428965884966" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>
